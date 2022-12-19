@@ -1,16 +1,16 @@
-package com.example.myapplication.ui.home;
+package com.example.myapplication.AdminSite.Table;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class DashboardViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public DashboardViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment ádasdasdasd");
+        mText.setValue("This is Table fragment");
     }
 
     public LiveData<String> getText() {

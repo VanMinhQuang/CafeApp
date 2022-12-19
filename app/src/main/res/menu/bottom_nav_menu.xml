@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_drink"
+        android:icon="@drawable/ic_baseline_local_drink_24"
+        android:title="Drinks" />
+
+    <item
+        android:id="@+id/navigation_table"
+        android:icon="@drawable/ic_baseline_table_bar_24"
+        android:title="Table" />
+
+    <item
+        android:id="@+id/navigation_category"
+        android:icon="@drawable/ic_baseline_category_24"
+        android:title="Category" />
+    <item
+        android:id="@+id/navigation_staff"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="Staff" />
+
+</menu>
