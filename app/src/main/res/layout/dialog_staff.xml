@@ -9,49 +9,77 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STAFF MANANGING PAGE"
-        android:textSize="30sp"
+        android:text="STAFF MANAGING"
+        android:textSize="35sp"
         android:layout_gravity="center"
+        android:textAlignment="center"
         android:textStyle="bold"/>
-    <EditText
-        android:id="@+id/txtStaffID"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="nhap vao id"/>
-    <EditText
-        android:id="@+id/txtStaffUserName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nhap vao user"/>
-    <EditText
-        android:id="@+id/txtStaffPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nhap vao pass"/>
-    <EditText
-        android:id="@+id/txtStaffPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nhap vao p[hone"/>
-    <Spinner
-        android:id="@+id/spinStaffPosition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nhap vao pos" android:layout_margin="10dp"
-        />
-    <EditText
-        android:id="@+id/txtStaffCertificate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nhap vao cert"/>
-    <EditText
-        android:id="@+id/txtStaffAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="nhap vao address"/>
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+        <EditText
+            android:id="@+id/txtStaffID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID"
+            android:minHeight="48dp"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/txtStaffUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="User Name"
+            android:minHeight="48dp"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/txtStaffPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pasword"
+            android:minHeight="48dp"
+            android:inputType="textPassword"/>
+
+        <EditText
+            android:id="@+id/txtStaffPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            android:minHeight="48dp" />
+
+        <Spinner
+            android:id="@+id/spinStaffPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:contentDescription="@android:string/autofill"
+            android:hint="nhap vao pos"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/txtStaffCertificate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Certificate Number"
+            android:minHeight="48dp" />
+
+        <EditText
+            android:id="@+id/txtStaffAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:minHeight="48dp"
+            android:inputType="textPostalAddress"/>
+    </LinearLayout>
+
     <Button
+        android:id="@+id/btnPush"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="push"
-        android:id="@+id/btnPush"/>
+        android:layout_margin="10dp"
+        android:text="push" />
 </LinearLayout>
