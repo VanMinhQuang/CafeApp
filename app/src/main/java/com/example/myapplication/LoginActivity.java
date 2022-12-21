@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                             break;
                         }
                         else{
-                            Toast.makeText(LoginActivity.this, "Logging...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Sai thông tin đăng nhập...", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else{
