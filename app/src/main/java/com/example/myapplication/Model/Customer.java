@@ -47,6 +47,9 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
+    public Customer() {
+    }
+
     public Customer(int customerID, String customerName, String customerPhoneNumber, int customerCertificate, String customerAddress) {
         this.customerID = customerID;
         this.customerName = customerName;

@@ -4,6 +4,9 @@ public class Category {
     private int CategoryID;
     private String CategoryName;
 
+    public Category() {
+    }
+
     public Category(int categoryID, String categoryName) {
         CategoryID = categoryID;
         CategoryName = categoryName;

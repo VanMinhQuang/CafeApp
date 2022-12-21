@@ -47,6 +47,10 @@ public class Product {
         this.quantity = quantity;
     }
 
+
+    public Product() {
+    }
+
     public Product(int productID, int categoryID, float price, String productName, long quantity) {
         this.productID = productID;
         this.categoryID = categoryID;

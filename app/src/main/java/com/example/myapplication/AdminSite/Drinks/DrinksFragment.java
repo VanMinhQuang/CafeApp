@@ -3,6 +3,7 @@ package com.example.myapplication.AdminSite.Drinks;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,16 +21,18 @@ public class DrinksFragment extends Fragment {
 
     private FragmentDrinksBinding binding;
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DrinkViewModel drinkViewModel =
-                new ViewModelProvider(this).get(DrinkViewModel.class);
-
         binding = FragmentDrinksBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDrink;
-        drinkViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
     @Override

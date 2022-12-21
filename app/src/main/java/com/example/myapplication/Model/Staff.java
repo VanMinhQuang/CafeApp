@@ -9,7 +9,10 @@ public class Staff {
     private int Certificate;
     private String position;
 
-    public Staff(int id, String password, String username, String address, String phoneNumber, int certificate, String position) {
+    public Staff() {
+    }
+
+    public Staff(int id, String username, String password, String address, String phoneNumber, int certificate, String position) {
         this.id = id;
         this.password = password;
         this.username = username;

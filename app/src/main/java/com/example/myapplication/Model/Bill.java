@@ -10,6 +10,9 @@ public class Bill {
     private float totalPrice;
     private Date DateTime;
 
+    public Bill() {
+    }
+
     public Bill(int billid, int customerID, int staffID, int tableID, float totalPrice, Date dateTime) {
         Billid = billid;
         CustomerID = customerID;
