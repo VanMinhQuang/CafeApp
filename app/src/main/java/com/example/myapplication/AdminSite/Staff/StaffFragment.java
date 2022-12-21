@@ -86,7 +86,9 @@ public class StaffFragment extends Fragment {
                 btnPush.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         onClickAddStaff();
+                        alert.dismiss();
                     }
                 });
             }
