@@ -1,5 +1,8 @@
 package com.example.myapplication.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Staff {
     private int id;
     private String password;
@@ -20,6 +23,17 @@ public class Staff {
         this.phoneNumber = phoneNumber;
         Certificate = certificate;
         this.position = position;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("username", username);
+        result.put("password", password);
+        result.put("address", address);
+        result.put("phoneNumber", phoneNumber);
+        result.put("certificate", Certificate);
+        result.put("position", position);
+        return  result;
     }
 
     public int getId() {

@@ -26,6 +26,7 @@ import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentStaffBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,28 +53,27 @@ public class StaffFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         anhxa(view);
         lstStaff = new ArrayList<>();
-        getAllStaff();
         adapter = new StaffAdapter(lstStaff);
         rcvStaff.setAdapter(adapter);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View viewDialogFaculty = LayoutInflater.from(getContext()).inflate(R.layout.dialog_staff, null);
+                View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_staff, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setView(viewDialogFaculty);
+                builder.setView(viewDialogStaff);
                 AlertDialog alert = builder.create();
                 alert.show();
                 ArrayAdapter<String> spinArray;
 
-                txtID = viewDialogFaculty.findViewById(R.id.txtStaffID);
-                txtUser = viewDialogFaculty.findViewById(R.id.txtStaffUserName);
-                txtPass = viewDialogFaculty.findViewById(R.id.txtStaffPassword);
-                txtCerti = viewDialogFaculty.findViewById(R.id.txtStaffCertificate);
-                spinPosition = viewDialogFaculty.findViewById(R.id.spinStaffPosition);
-                txtPhone = viewDialogFaculty.findViewById(R.id.txtStaffPhoneNumber);
-                txtAddress = viewDialogFaculty.findViewById(R.id.txtStaffAddress);
-                btnPush = viewDialogFaculty.findViewById(R.id.btnPush);
+                txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
+                txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
+                txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
+                txtCerti = viewDialogStaff.findViewById(R.id.txtStaffCertificate);
+                spinPosition = viewDialogStaff.findViewById(R.id.spinStaffPosition);
+                txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
+                txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
+                btnPush = viewDialogStaff.findViewById(R.id.btnPush);
 
                 List<String> listSpin = new ArrayList<String>();
                 listSpin.add("Mananger");
@@ -135,7 +135,7 @@ public class StaffFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff");
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        /*myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(lstStaff != null)
@@ -150,6 +150,47 @@ public class StaffFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getActivity(), "Get Staff Failed!!!", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Staff staff = snapshot.getValue(Staff.class);
+                if(staff != null){
+                    lstStaff.add(staff);
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Staff staff = snapshot.getValue(Staff.class);
+                if(staff == null || lstStaff == null || lstStaff.isEmpty())
+                    return;
+
+                for(int i=0;i<lstStaff.size();i++){
+                    if(staff.getId() == lstStaff.get(i).getId()){
+                        lstStaff.set(i, staff);
+                    }
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
