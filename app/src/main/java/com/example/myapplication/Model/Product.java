@@ -2,7 +2,7 @@ package com.example.myapplication.Model;
 
 public class Product {
     private int productID;
-    private int categoryID;
+    private Category category;
     private float Price;
     private String productName;
     private long quantity;
@@ -15,12 +15,12 @@ public class Product {
         this.productID = productID;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public Category getCategoryID() {
+        return category;
     }
 
     public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+        this.category = category;
     }
 
     public float getPrice() {
@@ -51,9 +51,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productID, int categoryID, float price, String productName, long quantity) {
+    public Product(int productID, Category category, float price, String productName, long quantity) {
         this.productID = productID;
-        this.categoryID = categoryID;
+        this.category = category;
         Price = price;
         this.productName = productName;
         this.quantity = quantity;
