@@ -1,11 +1,15 @@
 package com.example.myapplication.AdminSite.Staff;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +21,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Adapter.StaffAdapter;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentStaffBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,29 +40,59 @@ public class StaffFragment extends Fragment {
 
     private FragmentStaffBinding binding;
     private EditText txtID, txtUser, txtPass, txtCerti, txtPhone, txtAddress;
-    private Spinner spinPosition;
+    private FloatingActionButton btnSave;
     private Button btnPush;
+    private Spinner spinPosition;
+    private RecyclerView rcvStaff;
+    private StaffAdapter adapter;
+    private List<Staff> lstStaff;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         anhxa(view);
+        lstStaff = new ArrayList<>();
+        getAllStaff();
+        adapter = new StaffAdapter(lstStaff);
+        rcvStaff.setAdapter(adapter);
 
-        ArrayAdapter<String> spinArray;
-        List<String> listSpin = new ArrayList<String>();
-        listSpin.add("Mananger");
-        listSpin.add("Bartender");
-        listSpin.add("Waiter");
-        listSpin.add("Guard");
-        spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listSpin);
-        spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinPosition.setAdapter(spinArray);
-        btnPush.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickAddStaff();
+                View viewDialogFaculty = LayoutInflater.from(getContext()).inflate(R.layout.dialog_staff, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setView(viewDialogFaculty);
+                AlertDialog alert = builder.create();
+                alert.show();
+                ArrayAdapter<String> spinArray;
+
+                txtID = viewDialogFaculty.findViewById(R.id.txtStaffID);
+                txtUser = viewDialogFaculty.findViewById(R.id.txtStaffUserName);
+                txtPass = viewDialogFaculty.findViewById(R.id.txtStaffPassword);
+                txtCerti = viewDialogFaculty.findViewById(R.id.txtStaffCertificate);
+                spinPosition = viewDialogFaculty.findViewById(R.id.spinStaffPosition);
+                txtPhone = viewDialogFaculty.findViewById(R.id.txtStaffPhoneNumber);
+                txtAddress = viewDialogFaculty.findViewById(R.id.txtStaffAddress);
+                btnPush = viewDialogFaculty.findViewById(R.id.btnPush);
+
+                List<String> listSpin = new ArrayList<String>();
+                listSpin.add("Mananger");
+                listSpin.add("Bartender");
+                listSpin.add("Waiter");
+                listSpin.add("Guard");
+                spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listSpin);
+                spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinPosition.setAdapter(spinArray);
+                btnPush.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onClickAddStaff();
+                    }
+                });
             }
         });
+        getAllStaff();
+
 
     }
 
@@ -86,22 +124,41 @@ public class StaffFragment extends Fragment {
         myRef.setValue(staff, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
             }
         });
+    }
 
+    private void getAllStaff(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Staff");
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(lstStaff != null)
+                    lstStaff.clear();
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    Staff staff = dataSnapshot.getValue(Staff.class);
+                    lstStaff.add(staff);
+                }
+                adapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), "Get Staff Failed!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void anhxa(View view){
-        txtID = view.findViewById(R.id.txtStaffID);
-        txtUser = view.findViewById(R.id.txtStaffUserName);
-        txtPass = view.findViewById(R.id.txtStaffPassword);
-        txtCerti = view.findViewById(R.id.txtStaffCertificate);
-        spinPosition = view.findViewById(R.id.spinStaffPosition);
-        txtPhone = view.findViewById(R.id.txtStaffPhoneNumber);
-        txtAddress = view.findViewById(R.id.txtStaffAddress);
-        btnPush = view.findViewById(R.id.btnPush);
+        rcvStaff = view.findViewById(R.id.rcvStaff);
+        btnSave = view.findViewById(R.id.floatingbtnAddStaff);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rcvStaff.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+        rcvStaff.addItemDecoration(dividerItemDecoration);
+
 
     }
     @Override
