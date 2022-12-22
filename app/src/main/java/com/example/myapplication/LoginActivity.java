@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.zip.Inflater;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText username,password, usernameForgot, CMNDForgot, passwordForgot;
+    private EditText username,password, usernameForgot, PhoneForgot, passwordForgot;
     private long countStaff;
     private Button signInBtn, forgotBtn,resetBtn;
     @Override
@@ -57,14 +57,17 @@ public class LoginActivity extends AppCompatActivity {
                         String a = itemSnapshot.child("username").getValue().toString();
                         String b = itemSnapshot.child("password").getValue().toString();
                         if( a.equals(un)&& b.equals(pw)){
-                            Intent admin = new Intent(LoginActivity.this, AdminActivity.class);
-                            startActivity(admin);
-                            Intent sendUser = new Intent(LoginActivity.this, MainActivity.class);
-                            sendUser.putExtra("keyUser", a);
+                            Intent main = new Intent(LoginActivity.this, MainActivity.class);
+                            main.putExtra("KEY_Display_Name",  itemSnapshot.child("DisplayName").getValue().toString());
+                            startActivity(main);
                             break;
                         }
-                    }else{
-                        Toast.makeText(LoginActivity.this,"ASDASD",Toast.LENGTH_SHORT).show();
+                        else{
+                            Toast.makeText(LoginActivity.this, "Logging...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(LoginActivity.this, "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -73,11 +76,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
     }
     public void ForgotPassword(){
 
@@ -90,14 +88,14 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameForgot = dialogView.findViewById(R.id.forgot_username_edittext);
         passwordForgot = dialogView.findViewById(R.id.forgot_new_password_edittext);
-        CMNDForgot = dialogView.findViewById(R.id.forgot_cmnd_edittext);
+        PhoneForgot = dialogView.findViewById(R.id.forgot_phone_edittext);
         resetBtn = dialogView.findViewById(R.id.reset_password_btn);
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String un = usernameForgot.getText().toString();
                 String pw = passwordForgot.getText().toString();
-                String cmnd = CMNDForgot.getText().toString();
+                String cmnd = PhoneForgot.getText().toString();
                 if(TextUtils.isEmpty(un) || TextUtils.isEmpty(cmnd) || TextUtils.isEmpty(pw)){
                     Toast.makeText(LoginActivity.this,"Phải nhập đầy đủ thông tin",Toast.LENGTH_LONG).show();
                     return;
@@ -110,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                         for(DataSnapshot itemSnapshot: snapshot.getChildren()){
                             if(itemSnapshot.exists()){
                                 String a = itemSnapshot.child("username").getValue().toString();
-                                String b = itemSnapshot.child("certificate").getValue().toString();
+                                String b = itemSnapshot.child("phoneNumber").getValue().toString();
                                 if( a.equals(un)&& b.equals(cmnd)){
                                     myRef.child(itemSnapshot.getKey()).child("password").setValue(pw);
                                     alertDialog.cancel();
@@ -132,8 +130,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
     public void AnhXa(){
         //Login

@@ -115,13 +115,13 @@ public class StaffFragment extends Fragment {
         String phone = txtPhone.getText().toString();
         String address = txtAddress.getText().toString();
         String position = spinPosition.getSelectedItem().toString();
-        String certificate = txtDisplay.getText().toString();
+        String displayname = txtDisplay.getText().toString();
 
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff/" +id);
-        Staff staff = new Staff(id,username,password,address,phone, certificate, position);
+        Staff staff = new Staff(id,username,password,address,phone, displayname, position);
 
         myRef.setValue(staff, new DatabaseReference.CompletionListener() {
             @Override
