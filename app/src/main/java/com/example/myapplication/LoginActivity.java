@@ -59,14 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                         if( a.equals(un)&& b.equals(pw)){
                             Intent admin = new Intent(LoginActivity.this, AdminActivity.class);
                             startActivity(admin);
+                            Intent sendUser = new Intent(LoginActivity.this, MainActivity.class);
+                            sendUser.putExtra("keyUser", a);
                             break;
                         }
-                        else{
-                            Toast.makeText(LoginActivity.this, "Logging...", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                        Toast.makeText(LoginActivity.this, "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(LoginActivity.this,"ASDASD",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -75,6 +73,9 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+
 
 
     }
