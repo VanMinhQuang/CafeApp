@@ -27,7 +27,6 @@ import java.util.zip.Inflater;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText username,password, usernameForgot, PhoneForgot, passwordForgot;
-    private long countStaff;
     private Button signInBtn, forgotBtn,resetBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.myapplication.AdminSite.Table;
+package com.example.myapplication.ui.Table;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

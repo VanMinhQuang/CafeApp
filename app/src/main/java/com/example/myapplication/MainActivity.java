@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,7 +19,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
-
+    TextView displayNameHeader, positionHeader;
+    String displayName;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     @Override
@@ -38,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        NavigationView navigationView = binding.navHeaderView;
+        displayNameHeader = navigationView.findViewById(R.id.displayNameHeaderText);
+        positionHeader = navigationView.findViewById(R.id.positionHeaderText);
+        displayNameHeader.setText(displayName);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -66,6 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void AnhXa(){
         Intent intent = getIntent();
-        String displayName= intent.getExtras().getString("KEY_Display_Name");
+        displayName= intent.getExtras().getString("KEY_Display_Name");
     }
 }
