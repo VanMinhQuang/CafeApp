@@ -40,7 +40,7 @@ import java.util.List;
 public class StaffFragment extends Fragment {
 
     private FragmentStaffBinding binding;
-    private EditText txtID, txtUser, txtPass, txtCerti, txtPhone, txtAddress;
+    private EditText txtID, txtUser, txtPass, txtDisplay, txtPhone, txtAddress;
     private FloatingActionButton btnSave;
     private Button btnPush;
     private Spinner spinPosition;
@@ -69,7 +69,7 @@ public class StaffFragment extends Fragment {
                 txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
                 txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
                 txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
-                txtCerti = viewDialogStaff.findViewById(R.id.txtStaffCertificate);
+                txtDisplay = viewDialogStaff.findViewById(R.id.txtStaffDisplayName);
                 spinPosition = viewDialogStaff.findViewById(R.id.spinStaffPosition);
                 txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
                 txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
@@ -115,7 +115,7 @@ public class StaffFragment extends Fragment {
         String phone = txtPhone.getText().toString();
         String address = txtAddress.getText().toString();
         String position = spinPosition.getSelectedItem().toString();
-        int certificate = Integer.parseInt(txtCerti.getText().toString());
+        String certificate = txtDisplay.getText().toString();
 
 
 
@@ -134,24 +134,6 @@ public class StaffFragment extends Fragment {
     private void getAllStaff(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff");
-
-        /*myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(lstStaff != null)
-                    lstStaff.clear();
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    Staff staff = dataSnapshot.getValue(Staff.class);
-                    lstStaff.add(staff);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Get Staff Failed!!!", Toast.LENGTH_SHORT).show();
-            }
-        });*/
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

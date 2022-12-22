@@ -9,19 +9,19 @@ public class Staff {
     private String username;
     private String address;
     private String phoneNumber;
-    private int Certificate;
+    private String DisplayName;
     private String position;
 
     public Staff() {
     }
 
-    public Staff(int id, String username, String password, String address, String phoneNumber, int certificate, String position) {
+    public Staff(int id, String username, String password, String address, String phoneNumber, String DisplayName, String position) {
         this.id = id;
         this.password = password;
         this.username = username;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        Certificate = certificate;
+        this.DisplayName = DisplayName;
         this.position = position;
     }
 
@@ -31,7 +31,7 @@ public class Staff {
         result.put("password", password);
         result.put("address", address);
         result.put("phoneNumber", phoneNumber);
-        result.put("certificate", Certificate);
+        result.put("displayname", DisplayName);
         result.put("position", position);
         return  result;
     }
@@ -76,12 +76,12 @@ public class Staff {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getCertificate() {
-        return Certificate;
+    public String getDisplayName() {
+        return DisplayName;
     }
 
-    public void setCertificate(int certificate) {
-        Certificate = certificate;
+    public void setDisplayName(String DisplayName) {
+        this.DisplayName = DisplayName;
     }
 
     public String getPosition() {

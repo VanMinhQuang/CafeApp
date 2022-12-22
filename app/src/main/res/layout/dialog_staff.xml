@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
     android:orientation="vertical">
 
     <TextView
@@ -11,8 +12,11 @@
         android:layout_height="wrap_content"
         android:text="STAFF MANAGING"
         android:textSize="35sp"
+        android:padding="12dp"
+        android:textColor="@color/black"
         android:layout_gravity="center"
         android:textAlignment="center"
+        android:background="@drawable/bg_yellow_corner_16_topleft_topright"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -62,12 +66,12 @@
             android:minHeight="48dp" />
 
         <EditText
-            android:id="@+id/txtStaffCertificate"
+            android:id="@+id/txtStaffDisplayName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Certificate Number"
+            android:hint="Display Name"
             android:minHeight="48dp"
-            android:inputType="numberSigned"/>
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/txtStaffAddress"

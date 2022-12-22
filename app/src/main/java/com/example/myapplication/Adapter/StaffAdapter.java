@@ -59,7 +59,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                 EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
                 EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
                 EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
-                EditText txtCerti = viewDialogStaff.findViewById(R.id.txtStaffCertificate);
+                EditText txtDisplay = viewDialogStaff.findViewById(R.id.txtStaffDisplayName);
                 Spinner spinPosition = viewDialogStaff.findViewById(R.id.spinStaffPosition);
                 EditText txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
                 EditText txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
@@ -78,7 +78,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                 txtID.setText(String.valueOf(s.getId()));
                 txtUser.setText(s.getUsername());
                 txtPass.setText(s.getPassword());
-                txtCerti.setText(String.valueOf(s.getCertificate()));
+                txtDisplay.setText(String.valueOf(s.getDisplayName()));
                 txtPhone.setText(s.getPhoneNumber());
                 txtAddress.setText(s.getAddress());
                 int getPos = spinArray.getPosition(s.getPosition());
@@ -94,7 +94,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
                         String newName = txtUser.getText().toString().trim();
                         String newPass = txtPass.getText().toString().trim();
-                        int newCerti = Integer.parseInt(txtCerti.getText().toString().trim());
+                        String newDisplay = txtDisplay.getText().toString().trim();
                         String newPhone = txtPhone.getText().toString().trim();
                         String newAddress = txtAddress.getText().toString().trim();
                         String newPosition = spinPosition.getSelectedItem().toString();
@@ -104,7 +104,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                         s.setAddress(newAddress);
                         s.setPhoneNumber(newPhone);
                         s.setPosition(newPosition);
-                        s.setCertificate(newCerti);
+                        s.setDisplayName(newDisplay);
                         myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
