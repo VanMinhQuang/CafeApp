@@ -126,6 +126,19 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
     }
 
+
+    public void deleteStaffAsPosition(int  pos){
+        Staff staff = lstStaff.get(pos);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Staff");
+        myRef.child(String.valueOf(staff.getId())).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+            }
+        });
+        notifyItemRemoved(pos);
+    }
+
     @Override
     public int getItemCount() {
         return lstStaff.size();

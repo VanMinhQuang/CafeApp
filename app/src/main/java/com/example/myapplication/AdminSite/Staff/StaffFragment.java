@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.example.myapplication.Adapter.StaffAdapter;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
+import com.example.myapplication.SwipeCallBack.SwipeItemStaff;
 import com.example.myapplication.databinding.FragmentStaffBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
@@ -93,6 +95,9 @@ public class StaffFragment extends Fragment {
                 });
             }
         });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemStaff(adapter));
+        itemTouchHelper.attachToRecyclerView(rcvStaff);
         getAllStaff();
 
 
@@ -122,6 +127,7 @@ public class StaffFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff/" +id);
         Staff staff = new Staff(id,username,password,address,phone, displayname, position);
+
 
         myRef.setValue(staff, new DatabaseReference.CompletionListener() {
             @Override
@@ -154,6 +160,7 @@ public class StaffFragment extends Fragment {
                 for(int i=0;i<lstStaff.size();i++){
                     if(staff.getId() == lstStaff.get(i).getId()){
                         lstStaff.set(i, staff);
+                        break;
                     }
                 }
 
@@ -162,7 +169,17 @@ public class StaffFragment extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Staff staff =snapshot.getValue(Staff.class);
+                if(staff == null || lstStaff.isEmpty() || lstStaff == null)
+                    return;
+                for(int i=0;i<lstStaff.size();i++){
+                    if(staff.getId() == lstStaff.get(i).getId()){
+                        lstStaff.remove(lstStaff.get(i));
+                        break;
+                    }
+                }
 
+                adapter.notifyDataSetChanged();
             }
 
             @Override
