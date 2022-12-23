@@ -64,7 +64,7 @@ public class StaffFragment extends Fragment {
     private EditText txtID, txtUser, txtPass, txtDisplay, txtPhone, txtAddress;
     private CircleImageView profilePic;
     private FloatingActionButton btnSave;
-    private Button btnPush;
+    private Button btnPush, btnCancel;
     private Spinner spinPosition;
     private RecyclerView rcvStaff;
     private StaffAdapter adapter;
@@ -124,6 +124,7 @@ public class StaffFragment extends Fragment {
                 txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
                 txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
                 btnPush = viewDialogStaff.findViewById(R.id.btnPush);
+                btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
                 profilePic = viewDialogStaff.findViewById(R.id.profile_img);
 
                 List<String> listSpin = new ArrayList<String>();
@@ -150,6 +151,14 @@ public class StaffFragment extends Fragment {
                         alert.dismiss();
                     }
                 });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alert.dismiss();
+                    }
+                });
+
+
             }
         });
 
