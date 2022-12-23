@@ -3,8 +3,6 @@ package com.example.myapplication.Adapter;
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +14,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.AdminSite.Staff.OnClickImageListener;
-import com.example.myapplication.AdminSite.Staff.StaffFragment;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,7 +38,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
     List<Staff> lstStaff;
     CircleImageView imgStaff;
-    OnClickImageListener listener;
     ActivityResultLauncher<String> launcher;
     FirebaseStorage storage;
     String uriName = "";

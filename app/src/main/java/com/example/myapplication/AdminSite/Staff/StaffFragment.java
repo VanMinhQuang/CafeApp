@@ -50,7 +50,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class StaffFragment extends Fragment implements OnClickImageListener{
+public class StaffFragment extends Fragment {
 
     private FragmentStaffBinding binding;
     private EditText txtID, txtUser, txtPass, txtDisplay, txtPhone, txtAddress;
@@ -293,12 +293,6 @@ public class StaffFragment extends Fragment implements OnClickImageListener{
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-
-    @Override
-    public void onClick() {
-        launcher.launch("image/*");
     }
 
 
