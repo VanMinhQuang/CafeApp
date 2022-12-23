@@ -1,6 +1,10 @@
 package com.example.myapplication.Adapter;
 
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +16,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.example.myapplication.AdminSite.Staff.OnClickImageListener;
+import com.example.myapplication.AdminSite.Staff.StaffFragment;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -33,9 +45,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> {
 
     List<Staff> lstStaff;
+    CircleImageView imgStaff;
+    OnClickImageListener listener;
+    ActivityResultLauncher<String> launcher;
+    FirebaseStorage storage;
+    String uriName = "";
+
+
+
+
 
     public StaffAdapter(List<Staff> lstStaff) {
         this.lstStaff = lstStaff;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @NonNull
@@ -63,9 +89,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
             }
         });
 
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 View viewDialogStaff = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_staff,null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
                 builder.setView(viewDialogStaff);
@@ -75,6 +104,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Staff");
 
+                imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
                 EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
                 EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
                 EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
@@ -94,6 +124,17 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                 spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinPosition.setAdapter(spinArray);
 
+                Picasso.get().load(s.getImageURI()).into(imgStaff, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
                 txtID.setText(String.valueOf(s.getId()));
                 txtUser.setText(s.getUsername());
                 txtPass.setText(s.getPassword());
@@ -104,7 +145,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                 spinPosition.setSelection(getPos);
                 txtID.setEnabled(false);
                 txtPass.setTransformationMethod(null);
-
                 btnPush.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -157,6 +197,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
         notifyItemRemoved(pos);
     }
 
+
     @Override
     public int getItemCount() {
         return lstStaff.size();
@@ -167,6 +208,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
         CircleImageView imgCircleAvatar;
         TextView txtID, txtName, txtPos;
         ProgressBar progressBar;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgCircleAvatar = itemView.findViewById(R.id.imgItemImageStaff);

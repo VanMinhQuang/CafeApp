@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.myapplication.AdminSite.Staff.OnClickImageListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.Nullable;
@@ -15,7 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityAdminBinding;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity  {
 
     private ActivityAdminBinding binding;
     @Override
@@ -35,6 +36,7 @@ public class AdminActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
+
 
 
 }

@@ -1,10 +1,7 @@
 package com.example.myapplication.AdminSite.Staff;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,10 +10,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.StaffAdapter;
@@ -46,7 +39,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -58,7 +50,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class StaffFragment extends Fragment {
+public class StaffFragment extends Fragment implements OnClickImageListener{
 
     private FragmentStaffBinding binding;
     private EditText txtID, txtUser, txtPass, txtDisplay, txtPhone, txtAddress;
@@ -74,7 +66,10 @@ public class StaffFragment extends Fragment {
 
     private String uriName = "";
 
-    private ActivityResultLauncher<String> launcher;
+    ActivityResultLauncher<String> launcher;
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -299,4 +294,12 @@ public class StaffFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
+    @Override
+    public void onClick() {
+        launcher.launch("image/*");
+    }
+
+
 }
