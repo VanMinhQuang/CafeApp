@@ -11,11 +11,12 @@ public class Staff {
     private String phoneNumber;
     private String DisplayName;
     private String position;
+    private String imageURI;
 
     public Staff() {
     }
 
-    public Staff(int id, String username, String password, String address, String phoneNumber, String DisplayName, String position) {
+    public Staff(int id, String username, String password, String address, String phoneNumber, String DisplayName, String position, String imageURI) {
         this.id = id;
         this.password = password;
         this.username = username;
@@ -23,6 +24,7 @@ public class Staff {
         this.phoneNumber = phoneNumber;
         this.DisplayName = DisplayName;
         this.position = position;
+        this.imageURI = imageURI;
     }
 
     public Map<String, Object> toMap(){
@@ -90,5 +92,13 @@ public class Staff {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getImageURI() {
+        return imageURI;
+    }
+
+    public void setImageURI(String imageURI) {
+        this.imageURI = imageURI;
     }
 }

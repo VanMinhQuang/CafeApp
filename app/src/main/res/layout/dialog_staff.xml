@@ -1,106 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STAFF MANAGING"
-        android:textSize="35sp"
-        android:padding="12dp"
-        android:textColor="@color/black"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:background="@drawable/bg_yellow_corner_16_topleft_topright"
-        android:textStyle="bold"/>
-
-    <LinearLayout
+    <ScrollView
+        android:layout_above="@+id/donate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="20dp">
-        <EditText
-            android:id="@+id/txtStaffID"
-            android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="ID"
-            android:minHeight="48dp"
-            android:inputType="numberDecimal"/>
+            android:orientation="vertical"
+            android:layout_marginLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STAFF MANAGING"
+                android:textSize="35sp"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:background="@drawable/bg_yellow_corner_16_topleft_topright"
+                android:textStyle="bold"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_baseline_person_add_24"
+                android:id="@+id/profile_img"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"/>
 
-        <EditText
-            android:id="@+id/txtStaffUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="User Name"
-            android:minHeight="48dp"
-            android:inputType="text"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="20dp">
+                <EditText
+                    android:id="@+id/txtStaffID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ID"
+                    android:minHeight="48dp"
+                    android:inputType="numberDecimal"/>
 
-        <EditText
-            android:id="@+id/txtStaffPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Pasword"
-            android:minHeight="48dp"
-            android:inputType="textPassword"/>
+                <EditText
+                    android:id="@+id/txtStaffUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="User Name"
+                    android:minHeight="48dp"
+                    android:inputType="text"/>
 
-        <EditText
-            android:id="@+id/txtStaffPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:minHeight="48dp"
-            android:inputType="numberSigned"/>
+                <EditText
+                    android:id="@+id/txtStaffPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pasword"
+                    android:minHeight="48dp"
+                    android:inputType="textPassword"/>
 
-        <Spinner
-            android:id="@+id/spinStaffPosition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:contentDescription="@android:string/autofill"
-            android:hint="nhap vao pos"
-            android:minHeight="48dp" />
+                <EditText
+                    android:id="@+id/txtStaffPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone Number"
+                    android:minHeight="48dp"
+                    android:inputType="numberSigned"/>
 
-        <EditText
-            android:id="@+id/txtStaffDisplayName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Display Name"
-            android:minHeight="48dp"
-            android:inputType="text"/>
+                <Spinner
+                    android:id="@+id/spinStaffPosition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@android:string/autofill"
+                    android:hint="nhap vao pos"
+                    android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/txtStaffAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address"
-            android:minHeight="48dp"
-            android:inputType="textPostalAddress"/>
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/txtStaffDisplayName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Display Name"
+                    android:minHeight="48dp"
+                    android:inputType="text"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <Button
-            android:id="@+id/btnPush"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Save"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Cancel"
-            android:layout_weight="1"/>
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/txtStaffAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:minHeight="48dp"
+                    android:inputType="textPostalAddress"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/btnPush"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Save"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Cancel"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </LinearLayout>
