@@ -1,5 +1,8 @@
 package com.example.myapplication.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Category {
     private int CategoryID;
     private String CategoryName;
@@ -7,9 +10,15 @@ public class Category {
     public Category() {
     }
 
-    public Category(int categoryID, String categoryName) {
-        CategoryID = categoryID;
-        CategoryName = categoryName;
+    public Category(int CategoryID, String CategoryName) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+    }
+
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("categoryName", CategoryName);
+        return  result;
     }
 
     public int getCategoryID() {

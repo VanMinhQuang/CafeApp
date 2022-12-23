@@ -38,21 +38,10 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
     List<Staff> lstStaff;
     CircleImageView imgStaff;
-    ActivityResultLauncher<String> launcher;
-    FirebaseStorage storage;
-    String uriName = "";
-
-
-
 
 
     public StaffAdapter(List<Staff> lstStaff) {
         this.lstStaff = lstStaff;
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @NonNull
@@ -156,7 +145,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                         myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(builder.getContext(), "Update Staff Successfull!!!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(builder.getContext(), "Update Staff Success  !!!",Toast.LENGTH_SHORT).show();
                                 alert.dismiss();
                             }
                         });

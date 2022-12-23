@@ -33,7 +33,7 @@ public class Staff {
         result.put("password", password);
         result.put("address", address);
         result.put("phoneNumber", phoneNumber);
-        result.put("displayname", DisplayName);
+        result.put("DisplayName", DisplayName);
         result.put("position", position);
         return  result;
     }
