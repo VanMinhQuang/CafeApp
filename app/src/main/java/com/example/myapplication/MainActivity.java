@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,12 +19,15 @@ import com.example.myapplication.Model.Staff;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     TextView displayNameHeader, positionHeader;
-    String displayName;
+    String displayName, position, uri;
+    ImageView imageStaff;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navHeaderView;
-        displayNameHeader = navigationView.findViewById(R.id.displayNameHeaderText);
-        positionHeader = navigationView.findViewById(R.id.positionHeaderText);
-        displayNameHeader.setText(displayName);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -72,5 +74,17 @@ public class MainActivity extends AppCompatActivity {
     public void AnhXa(){
         Intent intent = getIntent();
         displayName= intent.getExtras().getString("KEY_Display_Name");
+        position = intent.getExtras().getString("KEY_Position");
+        uri = intent.getExtras().getString("KEY_URI");
+        NavigationView navigationView = binding.navHeaderView;
+        View headerView = navigationView.getHeaderView(0);
+
+        displayNameHeader = headerView.findViewById(R.id.displayNameHeaderText);
+        positionHeader = headerView.findViewById(R.id.positionHeaderText);
+        imageStaff = headerView.findViewById(R.id.imageHeader);
+
+        displayNameHeader.setText(displayName);
+        positionHeader.setText(position);
+        Picasso.get().load(uri).into(imageStaff);
     }
 }

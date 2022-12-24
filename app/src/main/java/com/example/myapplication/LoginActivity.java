@@ -57,7 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                         String b = itemSnapshot.child("password").getValue().toString();
                         if( a.equals(un)&& b.equals(pw)){
                             Intent main = new Intent(LoginActivity.this, MainActivity.class);
-                            main.putExtra("KEY_Display_Name",  itemSnapshot.child("DisplayName").getValue().toString());
+                            main.putExtra("KEY_Display_Name",  itemSnapshot.child("displayName").getValue().toString());
+                            main.putExtra("KEY_Position",  itemSnapshot.child("position").getValue().toString());
+                            main.putExtra("KEY_URI",  itemSnapshot.child("imageURI").getValue().toString());
                             startActivity(main);
                             break;
                         }
