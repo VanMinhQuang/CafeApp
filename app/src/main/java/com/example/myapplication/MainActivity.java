@@ -21,10 +21,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
     TextView displayNameHeader, positionHeader;
     String displayName, position, uri;
-    ImageView imageStaff;
+    CircleImageView imageStaff;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
