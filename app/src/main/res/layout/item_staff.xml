@@ -46,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:text="Pos"
                 android:textSize="20sp" />
-
         </LinearLayout>
 
 

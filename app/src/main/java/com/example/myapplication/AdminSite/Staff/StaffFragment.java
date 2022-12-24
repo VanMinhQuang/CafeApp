@@ -1,12 +1,16 @@
 package com.example.myapplication.AdminSite.Staff;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,7 +60,7 @@ public class StaffFragment extends Fragment {
 
     private FragmentStaffBinding binding;
     private EditText txtID, txtUser, txtPass, txtDisplay, txtPhone, txtAddress;
-    private CircleImageView profilePic, img;
+    private CircleImageView profilePic; //Biến img để lưu picture cho phần add riêng, fix riêng
     private FloatingActionButton btnSave;
     private Button btnPush, btnCancel;
     private Spinner spinPosition;
@@ -65,16 +69,29 @@ public class StaffFragment extends Fragment {
     private List<Staff> lstStaff;
     private FirebaseDatabase database;
     private FirebaseStorage storage;
+    CircleImageView imgStaff;
 
-    private String uriName;
 
+
+    private String uriName; //Một biến để lưu đường dẫn
     ActivityResultLauncher<String> launcher;
+    ActivityResultLauncher<String> launch;
 
+    public void launching(){
+         launch = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                imgStaff.setImageURI(result);
+                uploadImageToFirebase(result);
+            }
+        });
+    }
 
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
 
         binding = FragmentStaffBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -82,21 +99,28 @@ public class StaffFragment extends Fragment {
         anhxa(root.getRootView());
 
 
+        //Đây là cái launcher để thực hiện mở Gallery
         launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-                img.setImageURI(result);
+                profilePic.setImageURI(result);
                 uploadImageToFirebase(result);
 
             }
         });
 
 
+
         lstStaff = new ArrayList<>();
-        adapter = new StaffAdapter(lstStaff, new StaffAdapter.mIClickListener() {
+        adapter = new StaffAdapter(lstStaff, new StaffAdapter.mIClickListener() { // Thực hiện chỉnh sửa
             @Override
             public void onClickListener(Staff s) {
                 chinhsua(s);
+            }
+
+            @Override
+            public void launch() {
+                launching();
             }
         });
         rcvStaff.setAdapter(adapter);
@@ -121,7 +145,6 @@ public class StaffFragment extends Fragment {
                 btnPush = viewDialogStaff.findViewById(R.id.btnPush);
                 btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
                 profilePic = viewDialogStaff.findViewById(R.id.profile_img);
-                img = profilePic;
 
                 List<String> listSpin = new ArrayList<String>();
                 listSpin.add("Mananger");
@@ -132,7 +155,7 @@ public class StaffFragment extends Fragment {
                 spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinPosition.setAdapter(spinArray);
 
-                img.setOnClickListener(new View.OnClickListener() {
+                profilePic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         launcher.launch("image/*");
@@ -184,7 +207,7 @@ public class StaffFragment extends Fragment {
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-
+                Toast.makeText(getContext(),"Asdasd",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -293,6 +316,8 @@ public class StaffFragment extends Fragment {
 
     public void chinhsua(Staff s){
 
+
+
         View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_staff,null);
         AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
         builder.setView(viewDialogStaff);
@@ -302,7 +327,7 @@ public class StaffFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff");
 
-        CircleImageView imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
+        imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
         EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
         EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
         EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
@@ -312,8 +337,6 @@ public class StaffFragment extends Fragment {
         EditText txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
         Button btnPush = viewDialogStaff.findViewById(R.id.btnPush);
         Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
-
-        img = imgStaff;
         List<String> listSpin = new ArrayList<String>();
         listSpin.add("Mananger");
         listSpin.add("Bartender");
@@ -331,15 +354,15 @@ public class StaffFragment extends Fragment {
         txtAddress.setText(s.getAddress());
         int getPos = spinArray.getPosition(s.getPosition());
         spinPosition.setSelection(getPos);
-        Picasso.get().load(s.getImageURI()).into(img);
+        Picasso.get().load(s.getImageURI()).into(imgStaff);
         txtID.setEnabled(false);
         txtPass.setTransformationMethod(null);
 
-        img.setOnClickListener(new View.OnClickListener() {
+        imgStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launcher.launch("image/*");
-            }
+            } //Launch luôn
         });
         btnPush.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,7 +396,6 @@ public class StaffFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 alert.dismiss();
-                ;
             }
         });
 

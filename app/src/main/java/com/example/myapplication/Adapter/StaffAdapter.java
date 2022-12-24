@@ -28,13 +28,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> {
 
     List<Staff> lstStaff;
-    private mIClickListener mIClickListener;
+    private mIClickListener mIClickListener; //CHÚ Ý CÁI NÀY - tạo cái interface đê thực hiện chỉnh sửa ngay trong phần Fragment
     public interface  mIClickListener{
         void onClickListener(Staff s);
+        void launch();
     }
 
 
-    public StaffAdapter(List<Staff> lstStaff,  mIClickListener listener) {
+    public StaffAdapter(List<Staff> lstStaff,  mIClickListener listener) { //Gọi interface vào constructor, không có vấn đề
         this.lstStaff = lstStaff;
         this.mIClickListener = listener;
     }
@@ -44,6 +45,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
     public StaffAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewHolder = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_staff,parent, false);
         return new ViewHolder(viewHolder);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        mIClickListener.launch();
     }
 
     @Override
@@ -63,97 +70,10 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
             }
         });
-
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIClickListener.onClickListener(s);
-
-            /*    View viewDialogStaff = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_staff,null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
-                builder.setView(viewDialogStaff);
-                AlertDialog alert = builder.create();
-                alert.show();
-                ArrayAdapter<String> spinArray;
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("Staff");
-
-                CircleImageView imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
-                EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
-                EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
-                EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
-                EditText txtDisplay = viewDialogStaff.findViewById(R.id.txtStaffDisplayName);
-                Spinner spinPosition = viewDialogStaff.findViewById(R.id.spinStaffPosition);
-                EditText txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
-                EditText txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
-                Button btnPush = viewDialogStaff.findViewById(R.id.btnPush);
-                Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
-
-                List<String> listSpin = new ArrayList<String>();
-                listSpin.add("Mananger");
-                listSpin.add("Bartender");
-                listSpin.add("Waiter");
-                listSpin.add("Guard");
-                spinArray = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_item, listSpin);
-                spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinPosition.setAdapter(spinArray);
-
-                Picasso.get().load(s.getImageURI()).into(imgStaff, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.progressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-                });
-                txtID.setText(String.valueOf(s.getId()));
-                txtUser.setText(s.getUsername());
-                txtPass.setText(s.getPassword());
-                txtDisplay.setText(String.valueOf(s.getDisplayName()));
-                txtPhone.setText(s.getPhoneNumber());
-                txtAddress.setText(s.getAddress());
-                int getPos = spinArray.getPosition(s.getPosition());
-                spinPosition.setSelection(getPos);
-                txtID.setEnabled(false);
-                txtPass.setTransformationMethod(null);
-                btnPush.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String newName = txtUser.getText().toString().trim();
-                        String newPass = txtPass.getText().toString().trim();
-                        String newDisplay = txtDisplay.getText().toString().trim();
-                        String newPhone = txtPhone.getText().toString().trim();
-                        String newAddress = txtAddress.getText().toString().trim();
-                        String newPosition = spinPosition.getSelectedItem().toString();
-
-                        s.setUsername(newName);
-                        s.setPassword(newPass);
-                        s.setAddress(newAddress);
-                        s.setPhoneNumber(newPhone);
-                        s.setPosition(newPosition);
-                        s.setDisplayName(newDisplay);
-                        myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(builder.getContext(), "Update Staff Success  !!!",Toast.LENGTH_SHORT).show();
-                                alert.dismiss();
-                            }
-                        });
-                    }
-                });
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alert.dismiss();
-                        ;
-                    }
-                });*/
+                mIClickListener.onClickListener(s); //Đây là lúc sử dụng interface
 
             }
         });
@@ -162,6 +82,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
 
     public void deleteStaffAsPosition(int  pos){
+
         Staff staff = lstStaff.get(pos);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff");
