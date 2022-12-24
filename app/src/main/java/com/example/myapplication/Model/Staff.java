@@ -35,6 +35,7 @@ public class Staff {
         result.put("phoneNumber", phoneNumber);
         result.put("DisplayName", DisplayName);
         result.put("position", position);
+        result.put("imageURI",imageURI);
         return  result;
     }
 

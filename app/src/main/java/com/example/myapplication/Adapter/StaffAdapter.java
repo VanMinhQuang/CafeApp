@@ -2,19 +2,12 @@ package com.example.myapplication.Adapter;
 
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
-import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,12 +17,10 @@ import com.example.myapplication.R;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,11 +28,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> {
 
     List<Staff> lstStaff;
-    CircleImageView imgStaff;
+    private mIClickListener mIClickListener;
+    public interface  mIClickListener{
+        void onClickListener(Staff s);
+    }
 
 
-    public StaffAdapter(List<Staff> lstStaff) {
+    public StaffAdapter(List<Staff> lstStaff,  mIClickListener listener) {
         this.lstStaff = lstStaff;
+        this.mIClickListener = listener;
     }
 
     @NonNull
@@ -74,8 +69,9 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mIClickListener.onClickListener(s);
 
-                View viewDialogStaff = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_staff,null);
+            /*    View viewDialogStaff = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_staff,null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
                 builder.setView(viewDialogStaff);
                 AlertDialog alert = builder.create();
@@ -84,7 +80,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("Staff");
 
-                imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
+                CircleImageView imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
                 EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
                 EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
                 EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
@@ -157,7 +153,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
                         alert.dismiss();
                         ;
                     }
-                });
+                });*/
 
             }
         });
