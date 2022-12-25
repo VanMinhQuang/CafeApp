@@ -7,7 +7,7 @@
         android:title="Drinks" />
 
     <item
-        android:id="@+id/navigation_table"
+        android:id="    @+id/navigation_table"
         android:icon="@drawable/ic_baseline_table_bar_24"
         android:title="Table" />
 

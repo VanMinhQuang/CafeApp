@@ -67,25 +67,13 @@ public class StaffFragment extends Fragment {
     private RecyclerView rcvStaff;
     private StaffAdapter adapter;
     private List<Staff> lstStaff;
-    private FirebaseDatabase database;
-    private FirebaseStorage storage;
+
     CircleImageView imgStaff;
 
 
 
     private String uriName; //Một biến để lưu đường dẫn
-    ActivityResultLauncher<String> launcher;
     ActivityResultLauncher<String> launch;
-
-    public void launching(){
-         launch = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-            @Override
-            public void onActivityResult(Uri result) {
-                imgStaff.setImageURI(result);
-                uploadImageToFirebase(result);
-            }
-        });
-    }
 
 
 
@@ -100,7 +88,7 @@ public class StaffFragment extends Fragment {
 
 
         //Đây là cái launcher để thực hiện mở Gallery
-        launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+        launch = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
                 profilePic.setImageURI(result);
@@ -120,7 +108,7 @@ public class StaffFragment extends Fragment {
 
             @Override
             public void launch() {
-                launching();
+                ;
             }
         });
         rcvStaff.setAdapter(adapter);
@@ -158,7 +146,7 @@ public class StaffFragment extends Fragment {
                 profilePic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        launcher.launch("image/*");
+                        launch.launch("image/*");
                     }
                 });
 
@@ -191,7 +179,7 @@ public class StaffFragment extends Fragment {
 
 
     public String uploadImageToFirebase(Uri uri){
-        storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference("StaffImage").child(System.currentTimeMillis() + "." +getFileExtension(uri));
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -233,7 +221,7 @@ public class StaffFragment extends Fragment {
         String displayname = txtDisplay.getText().toString();
         String imasd = uriName;
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff/" +id);
         Staff staff = new Staff(id,username,password,address,phone, displayname, position,imasd);
         myRef.setValue(staff, new DatabaseReference.CompletionListener() {
@@ -358,12 +346,6 @@ public class StaffFragment extends Fragment {
         txtID.setEnabled(false);
         txtPass.setTransformationMethod(null);
 
-        imgStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launcher.launch("image/*");
-            } //Launch luôn
-        });
         btnPush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

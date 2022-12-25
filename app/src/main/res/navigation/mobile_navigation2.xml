@@ -13,14 +13,14 @@
 
     <fragment
         android:id="@+id/navigation_table"
-        android:name="com.example.myapplication.ui.Table.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.example.myapplication.AdminSite.Table.TableFragment"
+        android:label="Table"
+        tools:layout="@layout/fragment_table" />
 
     <fragment
         android:id="@+id/navigation_category"
         android:name="com.example.myapplication.AdminSite.Category.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="Category"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_staff"

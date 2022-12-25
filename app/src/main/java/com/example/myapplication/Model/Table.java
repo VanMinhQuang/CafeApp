@@ -1,23 +1,33 @@
 package com.example.myapplication.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Table {
 
-    private int tableID;
+    private String tableID;
     private String status;
 
     public Table() {
     }
 
-    public Table(int tableID, String status) {
+    public Table(String tableID, String status) {
         this.tableID = tableID;
         this.status = status;
     }
 
-    public int getTableID() {
+    public Map<String,Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("tableID", tableID);
+        result.put("status", status);
+        return result;
+    }
+
+    public String getTableID() {
         return tableID;
     }
 
-    public void setTableID(int tableID) {
+    public void setTableID(String tableID) {
         this.tableID = tableID;
     }
 
