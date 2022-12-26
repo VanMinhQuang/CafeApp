@@ -56,11 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                         String a = itemSnapshot.child("username").getValue().toString();
                         String b = itemSnapshot.child("password").getValue().toString();
                         if( a.equals(un)&& b.equals(pw)){
-                            Intent main = new Intent(LoginActivity.this, MainActivity.class);
-                            main.putExtra("KEY_Display_Name",  itemSnapshot.child("displayName").getValue().toString());
-                            main.putExtra("KEY_Position",  itemSnapshot.child("position").getValue().toString());
-                            main.putExtra("KEY_URI",  itemSnapshot.child("imageURI").getValue().toString());
-                            startActivity(main);
+                            Move(itemSnapshot);
                             break;
                         }
                         else{
@@ -131,6 +127,18 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    public void Move(DataSnapshot itemSnapshot){
+        Intent main = new Intent(LoginActivity.this, MainActivity.class);
+        main.putExtra("KEY_Display_Name",  itemSnapshot.child("displayName").getValue().toString());
+        main.putExtra("KEY_Position",  itemSnapshot.child("position").getValue().toString());
+        main.putExtra("KEY_URI",  itemSnapshot.child("imageURI").getValue().toString());
+        main.putExtra("KEY_ADDRESS",  itemSnapshot.child("address").getValue().toString());
+        main.putExtra("KEY_ID",  itemSnapshot.child("id").getValue().toString());
+        main.putExtra("KEY_PHONE",  itemSnapshot.child("phoneNumber").getValue().toString());
+        main.putExtra("KEY_PW",  itemSnapshot.child("password").getValue().toString());
+        main.putExtra("KEY_UN",  itemSnapshot.child("username").getValue().toString());
+        startActivity(main);
     }
     public void AnhXa(){
         //Login

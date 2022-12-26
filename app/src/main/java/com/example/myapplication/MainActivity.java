@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     TextView displayNameHeader, positionHeader;
-    String displayName, position, uri;
+    String displayName, position, uri, username, password, address, phoneNumber, id;
     CircleImageView imageStaff;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -78,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         displayName= intent.getExtras().getString("KEY_Display_Name");
         position = intent.getExtras().getString("KEY_Position");
         uri = intent.getExtras().getString("KEY_URI");
+        id = intent.getExtras().getString("KEY_ID");
+        username = intent.getExtras().getString("KEY_UN");
+        password = intent.getExtras().getString("KEY_PW");
+        phoneNumber = intent.getExtras().getString("KEY_PHONE");
+        address = intent.getExtras().getString("KEY_ADDRESS");
         NavigationView navigationView = binding.navHeaderView;
         View headerView = navigationView.getHeaderView(0);
 
@@ -88,5 +93,25 @@ public class MainActivity extends AppCompatActivity {
         displayNameHeader.setText(displayName);
         positionHeader.setText(position);
         Picasso.get().load(uri).into(imageStaff);
+
+        imageStaff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileMove();
+            }
+        });
+    }
+
+    public void ProfileMove(){
+        Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+        profile.putExtra("KEY_Display_Name",  displayName);
+        profile.putExtra("KEY_Position",  position);
+        profile.putExtra("KEY_URI", uri);
+        profile.putExtra("KEY_ADDRESS",  address);
+        profile.putExtra("KEY_ID",  id);
+        profile.putExtra("KEY_PHONE",  phoneNumber);
+        profile.putExtra("KEY_UN",  username);
+        profile.putExtra("KEY_PW",  password);
+        startActivity(profile);
     }
 }

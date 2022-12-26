@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    tools:context=".ProfileActivity">
+    
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="35dp"
+            android:layout_width="wrap_content"
+            android:paddingRight="150dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Hình ảnh: "/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="right"
+            android:src="@drawable/ic_launcher_background"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="45dp"
+            android:textSize="20sp"
+            android:text="Mã nhân viên: "/>
+        <TextView
+            android:id="@+id/idNameProfile"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Tên nhân viên: "/>
+        <EditText
+            android:id="@+id/displayNameProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textSize="20sp"
+            android:text="Dương Minh Trí"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingRight="100dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="SĐT: "/>
+        <EditText
+            android:id="@+id/phoneProfile"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="0931177949"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingRight="100dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Địa chỉ: "/>
+        <EditText
+            android:id="@+id/addressProfile"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Độc lạ bình dương"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingRight="45dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Mật khẩu: "/>
+        <EditText
+            android:id="@+id/passwordProfile"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:inputType="textPassword"
+            android:text="0931177949"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:paddingRight="45dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Chức vụ: "/>
+        <TextView
+            android:id="@+id/positionProfile"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Trùm cuối"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/changeProfileBtn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:enabled="false"
+        android:text="Change"/>
+</LinearLayout>
