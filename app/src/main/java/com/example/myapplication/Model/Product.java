@@ -76,7 +76,7 @@ public class Product {
         HashMap<String, Object> result = new HashMap<>();
         result.put("productID", productID);
         result.put("productName", productName);
-        result.put("category", categoryProduct);
+        result.put("categoryProduct", categoryProduct);
         result.put("price",price);
         result.put("quantity",quantity);
         return result;

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,8 @@ import com.example.myapplication.Model.Category;
 import com.example.myapplication.Model.Product;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
+import com.example.myapplication.SwipeCallBack.SwipeItemProduct;
+import com.example.myapplication.SwipeCallBack.SwipeItemStaff;
 import com.example.myapplication.databinding.FragmentDrinksBinding;
 import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.example.myapplication.ui.home.HomeViewModel;
@@ -50,6 +54,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +77,7 @@ public class DrinksFragment extends Fragment {
     private String uriName = "";
     private ArrayList<String> listCategoryName = new ArrayList<>();
     ArrayAdapter<String> spinArray;
+    int getpos = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -79,7 +85,12 @@ public class DrinksFragment extends Fragment {
         View root = binding.getRoot();
         anhxa(root.getRootView());
         lstProduct = new ArrayList<>();
-        adapter = new ProductAdapter(lstProduct);
+        adapter = new ProductAdapter(lstProduct, new ProductAdapter.onClickHelper() {
+            @Override
+            public void adjustProduct(Product product) {
+                adjustProductinFragment(product);
+            }
+        });
         rcvProduct.setAdapter(adapter);
 
         launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
@@ -93,7 +104,7 @@ public class DrinksFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_drinks, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setView(viewDialogStaff);
                 AlertDialog alert = builder.create();
                 alert.show();
@@ -105,11 +116,10 @@ public class DrinksFragment extends Fragment {
                 btnSave = viewDialogStaff.findViewById(R.id.btnPushProduct);
                 spinnerProductCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
                 btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProduct);
-
-
-
+                spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listCategoryName);
                 getAllProductCategory();
-
+                spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerProductCategory.setAdapter(spinArray);
 
 
                 productImg.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +144,9 @@ public class DrinksFragment extends Fragment {
                 });
             }
         });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemProduct(adapter));
+        itemTouchHelper.attachToRecyclerView(rcvProduct);
         getAllProduct();
         return root;
     }
@@ -156,6 +169,65 @@ public class DrinksFragment extends Fragment {
             }
         });
 
+    }
+
+    private void adjustProductinFragment(Product product){
+        View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_drinks,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
+        builder.setView(viewDialogStaff);
+        AlertDialog alert = builder.create();
+        alert.show();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Product");
+        EditText txtID = viewDialogStaff.findViewById(R.id.txtProductID);
+        EditText txtName = viewDialogStaff.findViewById(R.id.txtProductName);
+        EditText txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
+        EditText txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantity);
+        Spinner spinCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
+        ImageView imgProduct = viewDialogStaff.findViewById(R.id.product_img);
+        Button btnPush = viewDialogStaff.findViewById(R.id.btnPushProduct);
+        Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProduct);
+
+        spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listCategoryName);
+        spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        getAllProductCategory();
+        spinCategory.setAdapter(spinArray);
+        txtID.setText(String.valueOf(product.getProductID()));
+        txtName.setText(product.getProductName());
+        txtPrice.setText(String.valueOf(product.getPrice()));
+        txtQuantity.setText(String.valueOf(product.getQuantity()));
+        int getPos = spinArray.getPosition(product.getCategoryProduct());
+        spinCategory.setSelection(getPos);
+        Picasso.get().load(product.getProductURI()).into(imgProduct);
+        txtID.setEnabled(false);
+        btnPush.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String newName = txtName.getText().toString().trim();
+                float newPrice = Float.parseFloat(txtPrice.getText().toString().trim());
+                long newQuantity = Long.parseLong(txtQuantity.getText().toString().trim());
+                String newCategorySelect = spinCategory.getSelectedItem().toString();
+
+                product.setProductName(newName);
+                product.setCategoryProduct(newCategorySelect);
+                product.setPrice(newPrice);
+                product.setQuantity(newQuantity);
+                myRef.child(String.valueOf(product.getProductID())).updateChildren(product.toMap(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(builder.getContext(), "Update Product Success  !!!",Toast.LENGTH_SHORT).show();
+                        alert.dismiss();
+                    }
+                });
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
     }
 
     public String getFileExtension(Uri uri){
@@ -196,12 +268,11 @@ public class DrinksFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listCategoryName.clear();
                 for(DataSnapshot ds: snapshot.getChildren()){
                     listCategoryName.add(ds.child("categoryName").getValue().toString());
                 }
-                spinArray = new ArrayAdapter<String>(getContext(),  androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, listCategoryName);
                 spinArray.notifyDataSetChanged();
-                spinnerProductCategory.setAdapter(spinArray);
             }
 
             @Override
@@ -280,6 +351,7 @@ public class DrinksFragment extends Fragment {
 
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
