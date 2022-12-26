@@ -134,7 +134,7 @@ public class StaffFragment extends Fragment {
                 btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
                 profilePic = viewDialogStaff.findViewById(R.id.profile_img);
 
-                List<String> listSpin = new ArrayList<String>();
+                 List<String> listSpin = new ArrayList<String>();
                 listSpin.add("Mananger");
                 listSpin.add("Bartender");
                 listSpin.add("Waiter");
@@ -195,7 +195,6 @@ public class StaffFragment extends Fragment {
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                Toast.makeText(getContext(),"Asdasd",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

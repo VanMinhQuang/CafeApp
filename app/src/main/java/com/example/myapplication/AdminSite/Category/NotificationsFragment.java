@@ -110,6 +110,7 @@ public class NotificationsFragment extends Fragment {
 
     }
 
+
     private void getAllCategory(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Category");
