@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,7 +11,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CATEGORY MANAGING"
+            android:text="TABLE MANAGING"
             android:textSize="35sp"
             android:padding="12dp"
             android:textColor="@color/black"
@@ -27,20 +26,20 @@
             android:orientation="vertical"
             android:layout_margin="10dp">
             <EditText
-                android:id="@+id/txtCategoryID"
+                android:id="@+id/txtTableID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="ID"
                 android:minHeight="48dp"
-                android:inputType="numberDecimal"/>
+                android:inputType="text"/>
 
-            <EditText
-                android:id="@+id/txtCategoryName"
+            <Spinner
+                android:id="@+id/txtTableStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                android:minHeight="48dp"
-                android:inputType="text"/>
+                android:contentDescription="Trạng thái table"
+                android:minHeight="48dp" />
+
 
         </LinearLayout>
 
@@ -50,14 +49,14 @@
             android:orientation="horizontal"
             android:weightSum="2">
             <Button
-                android:id="@+id/btnPushCategory"
+                android:id="@+id/btnPushTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Save"
                 android:layout_weight="1"/>
             <Button
-                android:id="@+id/btnCancelCategory"
+                android:id="@+id/btnCancelTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -65,6 +64,5 @@
                 android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
-
 
 </LinearLayout>

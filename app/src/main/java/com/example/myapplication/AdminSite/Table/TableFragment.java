@@ -1,82 +1,91 @@
-package com.example.myapplication.AdminSite.Category;
+package com.example.myapplication.AdminSite.Table;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Adapter.CategoryAdapter;
 import com.example.myapplication.Adapter.StaffAdapter;
+import com.example.myapplication.Adapter.TableAdapter;
 import com.example.myapplication.Model.Category;
-import com.example.myapplication.Model.Staff;
+import com.example.myapplication.Model.Table;
 import com.example.myapplication.R;
 import com.example.myapplication.SwipeCallBack.SwipeItemCategory;
-import com.example.myapplication.SwipeCallBack.SwipeItemStaff;
-import com.example.myapplication.databinding.FragmentNotificationsBinding;
+import com.example.myapplication.SwipeCallBack.SwipeItemTable;
+import com.example.myapplication.databinding.FragmentTableBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class TableFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
-    private EditText txtCategoryID, txtCategoryName;
+    private FragmentTableBinding binding;
+    private EditText txtTableID;
+    private Spinner spinTableStatus;
     private Button btnPush, btnCancel;
     private FloatingActionButton btnAdd;
-    private CategoryAdapter adapter;
-    private RecyclerView rcvCategory;
-    private List<Category> lstCategory;
+    private TableAdapter adapter;
+    private List<Table> lstTable;
+    private RecyclerView rcvTable;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentTableBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         anhxa(root.getRootView());
-        lstCategory = new ArrayList<>();
-        adapter = new CategoryAdapter(lstCategory);
-        rcvCategory.setAdapter(adapter);
+        lstTable = new ArrayList<>();
+
+        adapter = new TableAdapter(lstTable);
+
+        rcvTable.setAdapter(adapter);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_category, null);
+                View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_table, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setView(viewDialogStaff);
                 AlertDialog alert = builder.create();
                 alert.show();
-
-                txtCategoryID = viewDialogStaff.findViewById(R.id.txtCategoryID);
-                txtCategoryName = viewDialogStaff.findViewById(R.id.txtCategoryName);
-                btnPush = viewDialogStaff.findViewById(R.id.btnPushCategory);
-                btnCancel = viewDialogStaff.findViewById(R.id.btnCancelCategory);
-
+                ArrayAdapter<String> spinArray;
+                txtTableID = viewDialogStaff.findViewById(R.id.txtTableID);
+                spinTableStatus = viewDialogStaff.findViewById(R.id.txtTableStatus);
+                btnPush = viewDialogStaff.findViewById(R.id.btnPushTable);
+                btnCancel = viewDialogStaff.findViewById(R.id.btnCancelTable);
+                List<String> listSpin = new ArrayList<String>();
+                listSpin.add("AVAILABLE");
+                listSpin.add("UNAVAILABLE");
+                spinArray = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_item, listSpin);
+                spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinTableStatus.setAdapter(spinArray);
                 btnPush.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        onClickAddCategory();
+                        onClickAddTable();
                         alert.dismiss();
                     }
                 });
@@ -88,20 +97,21 @@ public class NotificationsFragment extends Fragment {
                 });
             }
         });
-        getAllCategory();
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemCategory(adapter));
-        itemTouchHelper.attachToRecyclerView(rcvCategory);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemTable(adapter));
+        itemTouchHelper.attachToRecyclerView(rcvTable);
+        getAllTable();
+
         return root;
     }
 
-    private void onClickAddCategory() {
-        int id = Integer.parseInt(txtCategoryID.getText().toString());
-        String name = txtCategoryName.getText().toString();
+    private void onClickAddTable() {
+        String id = txtTableID.getText().toString();
+        String status = spinTableStatus.getSelectedItem().toString();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Category/" +id);
-        Category category = new Category(id,name);
-        myRef.setValue(category, new DatabaseReference.CompletionListener() {
+        DatabaseReference myRef = database.getReference("Table/" +id);
+        Table table = new Table(id,status);
+        myRef.setValue(table, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
@@ -110,29 +120,28 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-
-    private void getAllCategory(){
+    private void getAllTable(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Category");
+        DatabaseReference myRef = database.getReference("Table");
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Category category = snapshot.getValue(Category.class);
-                if(category != null){
-                    lstCategory.add(category);
+                Table table = snapshot.getValue(Table.class);
+                if(table != null){
+                    lstTable.add(table);
                     adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Category category = snapshot.getValue(Category.class);
-                if(category == null || lstCategory == null || lstCategory.isEmpty())
+                Table table = snapshot.getValue(Table.class);
+                if(table == null || lstTable == null || lstTable.isEmpty())
                     return;
 
-                for(int i=0;i<lstCategory.size();i++){
-                    if(category.getCategoryID() == lstCategory.get(i).getCategoryID()){
-                        lstCategory.set(i, category);
+                for(int i=0;i<lstTable.size();i++){
+                    if(table.getTableID() == lstTable.get(i).getTableID()){
+                        lstTable.set(i, table);
                         break;
                     }
                 }
@@ -143,12 +152,12 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-                Category category =snapshot.getValue(Category.class);
-                if(category == null || lstCategory.isEmpty() || lstCategory == null)
+                Table table =snapshot.getValue(Table.class);
+                if(table == null || lstTable.isEmpty() || lstTable == null)
                     return;
-                for(int i=0;i<lstCategory.size();i++){
-                    if(category.getCategoryID() == lstCategory.get(i).getCategoryID()){
-                        lstCategory.remove(lstCategory.get(i));
+                for(int i=0;i<lstTable.size();i++){
+                    if(table.getTableID() == lstTable.get(i).getTableID()){
+                        lstTable.remove(lstTable.get(i));
                         break;
                     }
                 }
@@ -168,14 +177,14 @@ public class NotificationsFragment extends Fragment {
         });
     }
 
-    public void anhxa(View view){
-        rcvCategory = view.findViewById(R.id.rcvCategory);
-        btnAdd = view.findViewById(R.id.floatingbtnAddCategory);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rcvCategory.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
-        rcvCategory.addItemDecoration(dividerItemDecoration);
 
+    private void anhxa(View view){
+        rcvTable = view.findViewById(R.id.rcvTable);
+        btnAdd = view.findViewById(R.id.floatingbtnAddTable);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),4);
+        rcvTable.setLayoutManager(gridLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL);
+        rcvTable.addItemDecoration(dividerItemDecoration);
     }
 
     @Override

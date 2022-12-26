@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.Table;
+package com.example.myapplication.AdminSite.Table;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

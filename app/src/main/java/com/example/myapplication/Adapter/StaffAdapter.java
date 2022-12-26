@@ -31,7 +31,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
     private mIClickListener mIClickListener; //CHÚ Ý CÁI NÀY - tạo cái interface đê thực hiện chỉnh sửa ngay trong phần Fragment
     public interface  mIClickListener{
         void onClickListener(Staff s);
-        void launch();
     }
 
 
@@ -50,7 +49,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        mIClickListener.launch();
     }
 
     @Override

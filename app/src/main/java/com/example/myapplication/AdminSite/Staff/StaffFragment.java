@@ -60,32 +60,19 @@ public class StaffFragment extends Fragment {
 
     private FragmentStaffBinding binding;
     private EditText txtID, txtUser, txtPass, txtDisplay, txtPhone, txtAddress;
-    private CircleImageView profilePic; //Biến img để lưu picture cho phần add riêng, fix riêng
+    private CircleImageView profilePic, imgStaff;
     private FloatingActionButton btnSave;
     private Button btnPush, btnCancel;
     private Spinner spinPosition;
     private RecyclerView rcvStaff;
     private StaffAdapter adapter;
     private List<Staff> lstStaff;
-    private FirebaseDatabase database;
-    private FirebaseStorage storage;
-    CircleImageView imgStaff;
-
 
 
     private String uriName; //Một biến để lưu đường dẫn
-    ActivityResultLauncher<String> launcher;
+    private String uriName2;
     ActivityResultLauncher<String> launch;
-
-    public void launching(){
-         launch = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-            @Override
-            public void onActivityResult(Uri result) {
-                imgStaff.setImageURI(result);
-                uploadImageToFirebase(result);
-            }
-        });
-    }
+    ActivityResultLauncher<String> launch2;
 
 
 
@@ -100,12 +87,20 @@ public class StaffFragment extends Fragment {
 
 
         //Đây là cái launcher để thực hiện mở Gallery
-        launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+        launch = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
                 profilePic.setImageURI(result);
                 uploadImageToFirebase(result);
 
+            }
+        });
+
+        launch2 = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                imgStaff.setImageURI(result);
+                uploadImageToFirebase2(result);
             }
         });
 
@@ -118,10 +113,6 @@ public class StaffFragment extends Fragment {
                 chinhsua(s);
             }
 
-            @Override
-            public void launch() {
-                launching();
-            }
         });
         rcvStaff.setAdapter(adapter);
 
@@ -146,7 +137,7 @@ public class StaffFragment extends Fragment {
                 btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
                 profilePic = viewDialogStaff.findViewById(R.id.profile_img);
 
-                List<String> listSpin = new ArrayList<String>();
+                 List<String> listSpin = new ArrayList<String>();
                 listSpin.add("Mananger");
                 listSpin.add("Bartender");
                 listSpin.add("Waiter");
@@ -158,7 +149,7 @@ public class StaffFragment extends Fragment {
                 profilePic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        launcher.launch("image/*");
+                        launch.launch("image/*");
                     }
                 });
 
@@ -191,7 +182,7 @@ public class StaffFragment extends Fragment {
 
 
     public String uploadImageToFirebase(Uri uri){
-        storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference("StaffImage").child(System.currentTimeMillis() + "." +getFileExtension(uri));
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -200,6 +191,7 @@ public class StaffFragment extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         uriName = uri.toString();
+                        uriName2 = uri.toString();
                         Toast.makeText(getContext(),"Upload Image Successful",Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -207,7 +199,6 @@ public class StaffFragment extends Fragment {
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                Toast.makeText(getContext(),"Asdasd",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -216,6 +207,33 @@ public class StaffFragment extends Fragment {
             }
         });
         return uriName;
+    }
+
+    public String uploadImageToFirebase2(Uri uri){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference("StaffImage").child(System.currentTimeMillis() + "." +getFileExtension(uri));
+        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        uriName2 = uri.toString();
+                        Toast.makeText(getContext(),"Upload Image Successful",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Upload Image Failed!",Toast.LENGTH_SHORT).show();
+            }
+        });
+        return uriName2;
     }
 
     public String getFileExtension(Uri uri){
@@ -233,7 +251,7 @@ public class StaffFragment extends Fragment {
         String displayname = txtDisplay.getText().toString();
         String imasd = uriName;
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Staff/" +id);
         Staff staff = new Staff(id,username,password,address,phone, displayname, position,imasd);
         myRef.setValue(staff, new DatabaseReference.CompletionListener() {
@@ -361,9 +379,10 @@ public class StaffFragment extends Fragment {
         imgStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launcher.launch("image/*");
-            } //Launch luôn
+                launch2.launch("image/*");
+            }
         });
+
         btnPush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -374,7 +393,7 @@ public class StaffFragment extends Fragment {
                 String newPhone = txtPhone.getText().toString().trim();
                 String newAddress = txtAddress.getText().toString().trim();
                 String newPosition = spinPosition.getSelectedItem().toString();
-                String newUri = uriName;
+                String newUri = uriName2;
 
                 s.setUsername(newName);
                 s.setPassword(newPass);

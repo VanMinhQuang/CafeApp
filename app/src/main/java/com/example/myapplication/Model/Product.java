@@ -1,11 +1,15 @@
 package com.example.myapplication.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Product {
     private int productID;
-    private Category category;
-    private float Price;
+    private String categoryProduct;
+    private float price;
     private String productName;
     private long quantity;
+    private String productURI;
 
     public int getProductID() {
         return productID;
@@ -15,20 +19,29 @@ public class Product {
         this.productID = productID;
     }
 
-    public Category getCategoryID() {
-        return category;
+    public String getCategoryProduct() {
+        return categoryProduct;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.category = category;
+    public void setCategoryProduct(String categoryProduct) {
+        this.categoryProduct = categoryProduct;
     }
+
+    public String getProductURI() {
+        return productURI;
+    }
+
+    public void setProductURI(String productURI) {
+        this.productURI = productURI;
+    }
+
 
     public float getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(float price) {
-        Price = price;
+        this.price = price;
     }
 
     public String getProductName() {
@@ -51,11 +64,21 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productID, Category category, float price, String productName, long quantity) {
+    public Product(int productID, String category, float price, String productName, long quantity, String productURI) {
         this.productID = productID;
-        this.category = category;
-        Price = price;
+        this.categoryProduct = category;
+        this.price = price;
         this.productName = productName;
         this.quantity = quantity;
+        this.productURI = productURI;
+    }
+    public Map<String,Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("productID", productID);
+        result.put("productName", productName);
+        result.put("categoryProduct", categoryProduct);
+        result.put("price",price);
+        result.put("quantity",quantity);
+        return result;
     }
 }
