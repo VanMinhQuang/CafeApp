@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +70,8 @@ public class DrinksFragment extends Fragment {
     private Button btnSave, btnCancel;
     private ActivityResultLauncher<String> launcher;
     private String uriName = "";
-
+    private ArrayList<String> listCategoryName = new ArrayList<>();
+    ArrayAdapter<String> spinArray;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +97,6 @@ public class DrinksFragment extends Fragment {
                 builder.setView(viewDialogStaff);
                 AlertDialog alert = builder.create();
                 alert.show();
-                ArrayAdapter<String> spinArray;
                 txtID = viewDialogStaff.findViewById(R.id.txtProductID);
                 txtName = viewDialogStaff.findViewById(R.id.txtProductName);
                 txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
@@ -106,6 +107,8 @@ public class DrinksFragment extends Fragment {
                 btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProduct);
 
 
+
+                getAllProductCategory();
 
 
 
@@ -120,6 +123,12 @@ public class DrinksFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         onClickAddProduct();
+                        alert.dismiss();
+                    }
+                });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         alert.dismiss();
                     }
                 });
@@ -180,6 +189,26 @@ public class DrinksFragment extends Fragment {
             }
         });
         return uriName;
+    }
+
+    public void getAllProductCategory(){
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Category");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds: snapshot.getChildren()){
+                    listCategoryName.add(ds.child("categoryName").getValue().toString());
+                }
+                spinArray = new ArrayAdapter<String>(getContext(),  androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, listCategoryName);
+                spinArray.notifyDataSetChanged();
+                spinnerProductCategory.setAdapter(spinArray);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
