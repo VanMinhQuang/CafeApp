@@ -78,6 +78,11 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder> 
                         String newID = txtID.getText().toString().trim();
                         String newStatus = spinStatus.getSelectedItem().toString();
 
+                        if(newID.equals("")){
+                            Toast.makeText(builder.getContext(), "Vui long dung de trong thong tin",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
                         t.setTableID(newID);
                         t.setStatus(newStatus);
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.Adapter;
 
 import android.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,43 +48,53 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    View viewDialogStaff = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_category,null);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
-                    builder.setView(viewDialogStaff);
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                    try{
+                        View viewDialogStaff = LayoutInflater.from(v.getContext()).inflate(R.layout.dialog_category,null);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
+                        builder.setView(viewDialogStaff);
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
-                    EditText txtID = viewDialogStaff.findViewById(R.id.txtCategoryID);
-                    EditText txtName = viewDialogStaff.findViewById(R.id.txtCategoryName);
-                    Button btnPush = viewDialogStaff.findViewById(R.id.btnPushCategory);
-                    Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelCategory);
+                        EditText txtID = viewDialogStaff.findViewById(R.id.txtCategoryID);
+                        EditText txtName = viewDialogStaff.findViewById(R.id.txtCategoryName);
+                        Button btnPush = viewDialogStaff.findViewById(R.id.btnPushCategory);
+                        Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelCategory);
 
-                    txtID.setText(String.valueOf(category.getCategoryID()));
-                    txtID.setEnabled(false);
-                    txtName.setText(category.getCategoryName());
+                        txtID.setText(String.valueOf(category.getCategoryID()));
+                        txtID.setEnabled(false);
+                        txtName.setText(category.getCategoryName());
 
-                    btnPush.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String newName = txtName.getText().toString().trim();
-
-                            category.setCategoryName(newName);
-                            myRef.child(String.valueOf(category.getCategoryID())).updateChildren(category.toMap(), new DatabaseReference.CompletionListener() {
-                                @Override
-                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                    Toast.makeText(builder.getContext(), "Update Category Success!!!",Toast.LENGTH_SHORT).show();
-                                    alert.dismiss();
+                        btnPush.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String newName = txtName.getText().toString().trim();
+                                if(TextUtils.isEmpty(newName)){
+                                    Toast.makeText(builder.getContext(), "Vui long dung de trong thong tin",Toast.LENGTH_LONG).show();
+                                    return;
                                 }
-                            });
 
-                        }
-                    });
-                    btnCancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alert.dismiss();
-                        }
-                    });
+                                category.setCategoryName(newName);
+                                myRef.child(String.valueOf(category.getCategoryID())).updateChildren(category.toMap(), new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                        Toast.makeText(builder.getContext(), "Update Category Success!!!",Toast.LENGTH_SHORT).show();
+                                        alert.dismiss();
+                                    }
+                                });
+
+                            }
+                        });
+                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                alert.dismiss();
+                            }
+                        });
+                    }catch (Exception exception){
+                        Toast.makeText(v.getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                 }
             });
     }

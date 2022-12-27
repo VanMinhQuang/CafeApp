@@ -157,8 +157,14 @@ public class StaffFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        onClickAddStaff();
-                        alert.dismiss();
+                        try{
+                            onClickAddStaff();
+                            alert.dismiss();
+                        }catch (Exception exception){
+                            Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -335,88 +341,93 @@ public class StaffFragment extends Fragment {
     public void chinhsua(Staff s){
 
 
+        try{
+            View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_staff,null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
+            builder.setView(viewDialogStaff);
+            AlertDialog alert = builder.create();
+            alert.show();
+            ArrayAdapter<String> spinArray;
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Staff");
 
-        View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_staff,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
-        builder.setView(viewDialogStaff);
-        AlertDialog alert = builder.create();
-        alert.show();
-        ArrayAdapter<String> spinArray;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Staff");
+            imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
+            EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
+            EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
+            EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
+            EditText txtDisplay = viewDialogStaff.findViewById(R.id.txtStaffDisplayName);
+            Spinner spinPosition = viewDialogStaff.findViewById(R.id.spinStaffPosition);
+            EditText txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
+            EditText txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
+            Button btnPush = viewDialogStaff.findViewById(R.id.btnPush);
+            Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
+            List<String> listSpin = new ArrayList<String>();
+            listSpin.add("Mananger");
+            listSpin.add("Bartender");
+            listSpin.add("Waiter");
+            listSpin.add("Guard");
+            spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listSpin);
+            spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinPosition.setAdapter(spinArray);
 
-        imgStaff = viewDialogStaff.findViewById(R.id.profile_img);
-        EditText txtID = viewDialogStaff.findViewById(R.id.txtStaffID);
-        EditText txtUser = viewDialogStaff.findViewById(R.id.txtStaffUserName);
-        EditText txtPass = viewDialogStaff.findViewById(R.id.txtStaffPassword);
-        EditText txtDisplay = viewDialogStaff.findViewById(R.id.txtStaffDisplayName);
-        Spinner spinPosition = viewDialogStaff.findViewById(R.id.spinStaffPosition);
-        EditText txtPhone = viewDialogStaff.findViewById(R.id.txtStaffPhoneNumber);
-        EditText txtAddress = viewDialogStaff.findViewById(R.id.txtStaffAddress);
-        Button btnPush = viewDialogStaff.findViewById(R.id.btnPush);
-        Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
-        List<String> listSpin = new ArrayList<String>();
-        listSpin.add("Mananger");
-        listSpin.add("Bartender");
-        listSpin.add("Waiter");
-        listSpin.add("Guard");
-        spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listSpin);
-        spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinPosition.setAdapter(spinArray);
+            txtID.setText(String.valueOf(s.getId()));
+            txtUser.setText(s.getUsername());
+            txtPass.setText(s.getPassword());
+            txtDisplay.setText(String.valueOf(s.getDisplayName()));
+            txtPhone.setText(s.getPhoneNumber());
+            txtAddress.setText(s.getAddress());
+            int getPos = spinArray.getPosition(s.getPosition());
+            spinPosition.setSelection(getPos);
+            Picasso.get().load(s.getImageURI()).into(imgStaff);
+            txtID.setEnabled(false);
+            txtPass.setTransformationMethod(null);
 
-        txtID.setText(String.valueOf(s.getId()));
-        txtUser.setText(s.getUsername());
-        txtPass.setText(s.getPassword());
-        txtDisplay.setText(String.valueOf(s.getDisplayName()));
-        txtPhone.setText(s.getPhoneNumber());
-        txtAddress.setText(s.getAddress());
-        int getPos = spinArray.getPosition(s.getPosition());
-        spinPosition.setSelection(getPos);
-        Picasso.get().load(s.getImageURI()).into(imgStaff);
-        txtID.setEnabled(false);
-        txtPass.setTransformationMethod(null);
+            imgStaff.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launch2.launch("image/*");
+                }
+            });
 
-        imgStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launch2.launch("image/*");
-            }
-        });
+            btnPush.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        btnPush.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    String newName = txtUser.getText().toString().trim();
+                    String newPass = txtPass.getText().toString().trim();
+                    String newDisplay = txtDisplay.getText().toString().trim();
+                    String newPhone = txtPhone.getText().toString().trim();
+                    String newAddress = txtAddress.getText().toString().trim();
+                    String newPosition = spinPosition.getSelectedItem().toString();
+                    String newUri = uriName2;
 
-                String newName = txtUser.getText().toString().trim();
-                String newPass = txtPass.getText().toString().trim();
-                String newDisplay = txtDisplay.getText().toString().trim();
-                String newPhone = txtPhone.getText().toString().trim();
-                String newAddress = txtAddress.getText().toString().trim();
-                String newPosition = spinPosition.getSelectedItem().toString();
-                String newUri = uriName2;
+                    s.setUsername(newName);
+                    s.setPassword(newPass);
+                    s.setAddress(newAddress);
+                    s.setPhoneNumber(newPhone);
+                    s.setPosition(newPosition);
+                    s.setDisplayName(newDisplay);
+                    s.setImageURI(newUri);
+                    myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            Toast.makeText(builder.getContext(), "Update Staff Success  !!!",Toast.LENGTH_SHORT).show();
+                            alert.dismiss();
+                        }
+                    });
+                }
+            });
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        }catch (Exception exception){
+            Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                s.setUsername(newName);
-                s.setPassword(newPass);
-                s.setAddress(newAddress);
-                s.setPhoneNumber(newPhone);
-                s.setPosition(newPosition);
-                s.setDisplayName(newDisplay);
-                s.setImageURI(newUri);
-                myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        Toast.makeText(builder.getContext(), "Update Staff Success  !!!",Toast.LENGTH_SHORT).show();
-                        alert.dismiss();
-                    }
-                });
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
-            }
-        });
 
     }
 

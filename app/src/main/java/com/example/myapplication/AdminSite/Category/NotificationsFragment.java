@@ -2,6 +2,7 @@ package com.example.myapplication.AdminSite.Category;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,18 +96,29 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void onClickAddCategory() {
-        int id = Integer.parseInt(txtCategoryID.getText().toString());
-        String name = txtCategoryName.getText().toString();
+        try{
+            int id = Integer.parseInt(txtCategoryID.getText().toString());
+            String name = txtCategoryName.getText().toString();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Category/" +id);
-        Category category = new Category(id,name);
-        myRef.setValue(category, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
+            if(TextUtils.isEmpty(name)){
+                Toast.makeText(getContext(),"Vui long dung de trong thong tin",Toast.LENGTH_LONG).show();
+                return;
             }
-        });
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Category/" +id);
+            Category category = new Category(id,name);
+            myRef.setValue(category, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                    Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
+                }
+            });
+        }catch (Exception exception){
+            Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
     }
 

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,6 @@ public class DrinksFragment extends Fragment {
     private String uriName = "";
     private ArrayList<String> listCategoryName = new ArrayList<>();
     ArrayAdapter<String> spinArray;
-    int getpos = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -152,82 +152,99 @@ public class DrinksFragment extends Fragment {
     }
 
     private void onClickAddProduct(){
+        try{
+            int id = Integer.parseInt(txtID.getText().toString());
+            String name = txtName.getText().toString();
+            String categoryName = spinnerProductCategory.getSelectedItem().toString();
+            float price = Float.parseFloat(txtPrice.getText().toString());
+            long quantity = Long.parseLong(txtQuantity.getText().toString());
+            String imgURI = uriName;
 
-        int id = Integer.parseInt(txtID.getText().toString());
-        String name = txtName.getText().toString();
-        String categoryName = spinnerProductCategory.getSelectedItem().toString();
-        float price = Float.parseFloat(txtPrice.getText().toString());
-        long quantity = Long.parseLong(txtQuantity.getText().toString());
-        String imgURI = uriName;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Product/" +id);
-        Product product = new Product(id,categoryName,price,name, quantity, imgURI);
-        myRef.setValue(product, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
-            }
-        });
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Product/" +id);
+            Product product = new Product(id,categoryName,price,name, quantity, imgURI);
+            myRef.setValue(product, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                    Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
+                }
+            });
+        }catch (Exception exception){
+            Toast.makeText(getContext(), "Co loi xay ra, vui long nhap lai", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
     }
 
     private void adjustProductinFragment(Product product){
-        View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_drinks,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
-        builder.setView(viewDialogStaff);
-        AlertDialog alert = builder.create();
-        alert.show();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Product");
-        EditText txtID = viewDialogStaff.findViewById(R.id.txtProductID);
-        EditText txtName = viewDialogStaff.findViewById(R.id.txtProductName);
-        EditText txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
-        EditText txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantity);
-        Spinner spinCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
-        ImageView imgProduct = viewDialogStaff.findViewById(R.id.product_img);
-        Button btnPush = viewDialogStaff.findViewById(R.id.btnPushProduct);
-        Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProduct);
+        try{
+            View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_drinks,null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
+            builder.setView(viewDialogStaff);
+            AlertDialog alert = builder.create();
+            alert.show();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Product");
+            EditText txtID = viewDialogStaff.findViewById(R.id.txtProductID);
+            EditText txtName = viewDialogStaff.findViewById(R.id.txtProductName);
+            EditText txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
+            EditText txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantity);
+            Spinner spinCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
+            ImageView imgProduct = viewDialogStaff.findViewById(R.id.product_img);
+            Button btnPush = viewDialogStaff.findViewById(R.id.btnPushProduct);
+            Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProduct);
 
-        spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listCategoryName);
-        spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        getAllProductCategory();
-        spinCategory.setAdapter(spinArray);
-        txtID.setText(String.valueOf(product.getProductID()));
-        txtName.setText(product.getProductName());
-        txtPrice.setText(String.valueOf(product.getPrice()));
-        txtQuantity.setText(String.valueOf(product.getQuantity()));
-        int getPos = spinArray.getPosition(product.getCategoryProduct());
-        spinCategory.setSelection(getPos);
-        Picasso.get().load(product.getProductURI()).into(imgProduct);
-        txtID.setEnabled(false);
-        btnPush.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listCategoryName);
+            spinArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            getAllProductCategory();
+            spinCategory.setAdapter(spinArray);
+            txtID.setText(String.valueOf(product.getProductID()));
+            txtName.setText(product.getProductName());
+            txtPrice.setText(String.valueOf(product.getPrice()));
+            txtQuantity.setText(String.valueOf(product.getQuantity()));
+            int getPos = spinArray.getPosition(product.getCategoryProduct());
+            spinCategory.setSelection(getPos);
+            Picasso.get().load(product.getProductURI()).into(imgProduct);
+            txtID.setEnabled(false);
+            btnPush.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                String newName = txtName.getText().toString().trim();
-                float newPrice = Float.parseFloat(txtPrice.getText().toString().trim());
-                long newQuantity = Long.parseLong(txtQuantity.getText().toString().trim());
-                String newCategorySelect = spinCategory.getSelectedItem().toString();
+                    String newName = txtName.getText().toString().trim();
+                    float newPrice = Float.parseFloat(txtPrice.getText().toString().trim());
+                    long newQuantity = Long.parseLong(txtQuantity.getText().toString().trim());
+                    String newCategorySelect = spinCategory.getSelectedItem().toString();
 
-                product.setProductName(newName);
-                product.setCategoryProduct(newCategorySelect);
-                product.setPrice(newPrice);
-                product.setQuantity(newQuantity);
-                myRef.child(String.valueOf(product.getProductID())).updateChildren(product.toMap(), new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        Toast.makeText(builder.getContext(), "Update Product Success  !!!",Toast.LENGTH_SHORT).show();
-                        alert.dismiss();
+                    if(TextUtils.isEmpty(newName) || String.valueOf(newPrice) == "" || TextUtils.isEmpty(String.valueOf(newQuantity)) || TextUtils.isEmpty(newCategorySelect)){
+                        Toast.makeText(getContext(),"Vui long dien day du thong tin",Toast.LENGTH_LONG).show();
+                        return;
                     }
-                });
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert.dismiss();
-            }
-        });
+
+                    product.setProductName(newName);
+                    product.setCategoryProduct(newCategorySelect);
+                    product.setPrice(newPrice);
+                    product.setQuantity(newQuantity);
+                    myRef.child(String.valueOf(product.getProductID())).updateChildren(product.toMap(), new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            Toast.makeText(builder.getContext(), "Update Product Success  !!!",Toast.LENGTH_SHORT).show();
+                            alert.dismiss();
+                        }
+                    });
+                }
+            });
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+        }catch (Exception exception){
+            Toast.makeText(getContext(), "Co loi xay ra, vui long nhap lai", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
     }
 
     public String getFileExtension(Uri uri){

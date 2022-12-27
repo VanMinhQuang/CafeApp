@@ -2,6 +2,7 @@ package com.example.myapplication.AdminSite.Table;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,18 +106,25 @@ public class TableFragment extends Fragment {
     }
 
     private void onClickAddTable() {
-        String id = txtTableID.getText().toString();
-        String status = spinTableStatus.getSelectedItem().toString();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Table/" +id);
-        Table table = new Table(id,status);
-        myRef.setValue(table, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
+            String id = txtTableID.getText().toString();
+            String status = spinTableStatus.getSelectedItem().toString();
+            if(TextUtils.isEmpty(id)){
+                Toast.makeText(getContext(),"Vui long dung de trong thong tin",Toast.LENGTH_LONG).show();
+                return;
             }
-        });
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Table/" +id);
+            Table table = new Table(id,status);
+            myRef.setValue(table, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                    Toast.makeText(getContext(), "Push success", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
 
     }
 
