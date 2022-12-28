@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_nav_order"
+    app:startDestination="@id/navigation_drink_order">
+    <fragment
+        android:id="@+id/navigation_result_order"
+        android:name="com.example.myapplication.OrderSite.ResultOrderFragment"
+        android:label="fragment_result_order"
+        tools:layout="@layout/fragment_result_order" />
+    <fragment
+        android:id="@+id/navigation_drink_order"
+        android:name="com.example.myapplication.OrderSite.FoodOrderFragment"
+        android:label="fragment_food_order"
+        tools:layout="@layout/fragment_food_order" />
+</navigation>

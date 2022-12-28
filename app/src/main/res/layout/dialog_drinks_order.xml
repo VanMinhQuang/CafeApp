@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_yellow_corner_16_topleft_topright"
+                android:padding="12dp"
+                android:text="Product Order"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/product_order_img"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_baseline_person_add_24" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtProductIDOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ID: 10000"
+                    android:textSize="20sp"
+                    android:minHeight="48dp" />
+
+                <TextView
+                    android:id="@+id/txtProductNameOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Naruto matcha matme"
+                    android:textSize="20sp"
+                    android:minHeight="48dp" />
+
+                <TextView
+                    android:id="@+id/txtProductPriceOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20.000"
+                    android:textSize="20sp"
+                    android:minHeight="48dp" />
+
+                <EditText
+                    android:id="@+id/txtProductQuantityOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Quantity"
+                    android:inputType="number"
+                    android:minHeight="48dp" />
+                <TextView
+                    android:id="@+id/txtProductTotalPriceOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20.000"
+                    android:textSize="20sp"
+                    android:minHeight="48dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnPushProductOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Save" />
+
+                <Button
+                    android:id="@+id/btnCancelProductOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

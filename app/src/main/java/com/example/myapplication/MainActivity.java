@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -96,6 +97,21 @@ public class MainActivity extends AppCompatActivity  {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.order_action_bar_item:
+                Intent order = new Intent(this, OrderActivity.class);
+                startActivity(order);
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @Override

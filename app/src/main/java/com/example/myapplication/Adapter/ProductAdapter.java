@@ -31,7 +31,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public interface onClickHelper{
         public void adjustProduct(Product product);
     }
-
     public ProductAdapter(List<Product> lstProduct,onClickHelper listener) {
         this.lstProduct = lstProduct;
         this.listener = listener;
