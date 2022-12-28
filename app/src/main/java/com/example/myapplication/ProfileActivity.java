@@ -1,24 +1,35 @@
 package com.example.myapplication;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Model.Staff;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,12 +40,16 @@ public class ProfileActivity extends AppCompatActivity {
     Button changeBtn;
     CircleImageView profileImage;
     String displayName, position, uri, username,password, address, phoneNumber, id;
+    ActivityResultLauncher<String> launcher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         AnhXa();
     }
+
+
+
 
     public void AnhXa(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -67,6 +82,11 @@ public class ProfileActivity extends AppCompatActivity {
         addressET.setText(address);
         passwordET.setText(password);
         positionTV.setText(position);
+        maNV.setEnabled(false);
+        displayNameET.setEnabled(false);
+        positionTV.setEnabled(false);
+
+
         //set các thay đổi trong Edit Text và enable Change Button
         AnhXaEditText();
         changeBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,14 +94,12 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //cập nhật lại database và xml
                 String newPass = passwordET.getText().toString().trim();
-                String newDisplay = displayNameET.getText().toString().trim();
                 String newPhone = phoneET.getText().toString().trim();
                 String newAddress = addressET.getText().toString().trim();
 
                 s.setPassword(newPass);
                 s.setAddress(newAddress);
                 s.setPhoneNumber(newPhone);
-                s.setDisplayName(newDisplay);
                 myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
