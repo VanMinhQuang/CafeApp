@@ -27,4 +27,10 @@
         android:name="com.example.myapplication.AdminSite.Staff.StaffFragment"
         android:label="Staff"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.example.myapplication.AdminSite.Schedule.ScheduleFragment"
+        android:label="Staff"
+        tools:layout="@layout/fragment_schedule" />
 </navigation>

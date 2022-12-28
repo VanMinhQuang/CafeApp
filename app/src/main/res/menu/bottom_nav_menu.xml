@@ -19,5 +19,9 @@
         android:id="@+id/navigation_staff"
         android:icon="@drawable/ic_baseline_people_24"
         android:title="Staff" />
+    <item
+        android:id="@+id/navigation_schedule"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="Staff Schedule" />
 
 </menu>

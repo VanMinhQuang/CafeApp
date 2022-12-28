@@ -96,8 +96,13 @@ public class DrinksFragment extends Fragment {
         launcher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-                productImg.setImageURI(result);
-                uploadImageToFirebase(result);
+                try{
+                    productImg.setImageURI(result);
+                    uploadImageToFirebase(result);
+                }catch (RuntimeException exception){
+                    return;
+                }
+
             }
         });
         btnAdd.setOnClickListener(new View.OnClickListener() {

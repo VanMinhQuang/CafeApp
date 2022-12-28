@@ -2,12 +2,15 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -23,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     TextView displayNameHeader, positionHeader;
     String displayName, position, uri, username, password, address, phoneNumber, id;
     CircleImageView imageStaff;
@@ -38,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AnhXa();
-        int i = 0;
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,16 +51,45 @@ public class MainActivity extends AppCompatActivity {
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navHeaderView;
+
+
+        imageStaff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileMove();
+            }
+        });
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.admin_site)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if(id == R.id.admin_site){
+                    if(TextUtils.equals(position,"Manager")){
+                        Intent intent = new Intent(MainActivity.this,AdminActivity.class);
+                        startActivity(intent);
+
+                    }else{
+                        Toast.makeText(MainActivity.this,"Khu vuc chi danh cho quan ly",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    NavigationUI.onNavDestinationSelected(item, navController);
+                }
+                drawer.close();
+                return true;
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,12 +126,6 @@ public class MainActivity extends AppCompatActivity {
         positionHeader.setText(position);
         Picasso.get().load(uri).into(imageStaff);
 
-        imageStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ProfileMove();
-            }
-        });
     }
 
     public void ProfileMove(){

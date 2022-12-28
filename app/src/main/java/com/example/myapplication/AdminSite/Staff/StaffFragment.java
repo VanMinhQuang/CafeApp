@@ -72,7 +72,6 @@ public class StaffFragment extends Fragment {
     private String uriName; //Một biến để lưu đường dẫn
     private String uriName2;
     ActivityResultLauncher<String> launch;
-    ActivityResultLauncher<String> launch2;
 
 
 
@@ -90,17 +89,12 @@ public class StaffFragment extends Fragment {
         launch = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-                profilePic.setImageURI(result);
-                uploadImageToFirebase(result);
-
-            }
-        });
-
-        launch2 = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
-            @Override
-            public void onActivityResult(Uri result) {
-                imgStaff.setImageURI(result);
-                uploadImageToFirebase2(result);
+                try{
+                    profilePic.setImageURI(result);
+                    uploadImageToFirebase(result);
+                }catch (RuntimeException exception){
+                    return;
+                }
             }
         });
 
@@ -138,8 +132,8 @@ public class StaffFragment extends Fragment {
                 profilePic = viewDialogStaff.findViewById(R.id.profile_img);
 
                  List<String> listSpin = new ArrayList<String>();
-                listSpin.add("Mananger");
-                listSpin.add("Bartender");
+                listSpin.add("Manager");
+                listSpin.add("Barista");
                 listSpin.add("Waiter");
                 listSpin.add("Guard");
                 spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listSpin);
@@ -362,8 +356,8 @@ public class StaffFragment extends Fragment {
             Button btnPush = viewDialogStaff.findViewById(R.id.btnPush);
             Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
             List<String> listSpin = new ArrayList<String>();
-            listSpin.add("Mananger");
-            listSpin.add("Bartender");
+            listSpin.add("Manager");
+            listSpin.add("Barista");
             listSpin.add("Waiter");
             listSpin.add("Guard");
             spinArray = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listSpin);
@@ -382,12 +376,6 @@ public class StaffFragment extends Fragment {
             txtID.setEnabled(false);
             txtPass.setTransformationMethod(null);
 
-            imgStaff.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launch2.launch("image/*");
-                }
-            });
 
             btnPush.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -399,7 +387,6 @@ public class StaffFragment extends Fragment {
                     String newPhone = txtPhone.getText().toString().trim();
                     String newAddress = txtAddress.getText().toString().trim();
                     String newPosition = spinPosition.getSelectedItem().toString();
-                    String newUri = uriName2;
 
                     s.setUsername(newName);
                     s.setPassword(newPass);
@@ -407,7 +394,6 @@ public class StaffFragment extends Fragment {
                     s.setPhoneNumber(newPhone);
                     s.setPosition(newPosition);
                     s.setDisplayName(newDisplay);
-                    s.setImageURI(newUri);
                     myRef.child(String.valueOf(s.getId())).updateChildren(s.toMap(), new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
