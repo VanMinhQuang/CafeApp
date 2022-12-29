@@ -1,4 +1,4 @@
-package com.example.myapplication.OrderSite;
+package com.example.myapplication.ui.home.OrderSite;
 
 import android.os.Bundle;
 
@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import com.example.myapplication.Adapter.TableAdapter;
 import com.example.myapplication.Model.Table;
 import com.example.myapplication.R;
-import com.example.myapplication.databinding.FragmentTableBinding;
 import com.example.myapplication.databinding.FragmentTableOrderBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
