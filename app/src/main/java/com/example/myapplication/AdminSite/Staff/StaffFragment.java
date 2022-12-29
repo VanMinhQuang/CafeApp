@@ -153,7 +153,6 @@ public class StaffFragment extends Fragment {
 
                         try{
                             onClickAddStaff();
-                            alert.dismiss();
                         }catch (Exception exception){
                             Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
                             return;

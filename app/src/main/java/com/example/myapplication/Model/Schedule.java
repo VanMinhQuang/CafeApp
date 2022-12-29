@@ -25,8 +25,6 @@ public class Schedule implements Serializable {
     }
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("date", date);
-        result.put("shift", shift);
         result.put("staffBarista", staffBarista);
         result.put("staffWaiter",staffWaiter);
         result.put("staffGuard",staffGuard);

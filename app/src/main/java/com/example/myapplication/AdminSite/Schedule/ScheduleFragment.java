@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,8 @@ import com.example.myapplication.Adapter.ScheduleAdapter;
 import com.example.myapplication.Model.Schedule;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
+import com.example.myapplication.SwipeCallBack.SwipeItemSchedule;
+import com.example.myapplication.SwipeCallBack.SwipeItemStaff;
 import com.example.myapplication.databinding.FragmentScheduleBinding;
 import com.example.myapplication.databinding.FragmentStaffBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,7 +74,12 @@ public class ScheduleFragment extends Fragment {
         initDatePicker();
         anhxa(root.getRootView());
         lstSchedule = new ArrayList<>();
-        adapter = new ScheduleAdapter(lstSchedule);
+        adapter = new ScheduleAdapter(lstSchedule, new ScheduleAdapter.onClickHelper() {
+            @Override
+            public void adjustProduct(Schedule schedule) {
+                chinhsua(schedule);
+            }
+        });
         rcvSchedule.setAdapter(adapter);
 
         btnDatePicker.setText(getTodayDate());
@@ -120,7 +130,6 @@ public class ScheduleFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         onClickAddSchedule();
-                        alert.dismiss();
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +147,8 @@ public class ScheduleFragment extends Fragment {
             }
         });
 
-
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemSchedule(adapter));
+        itemTouchHelper.attachToRecyclerView(rcvSchedule);
         return root;
     }
 
@@ -330,6 +340,102 @@ public class ScheduleFragment extends Fragment {
 
     private String makeDateString(int day, int month, int year) {
         return day +"-"+ month +"-"+ year;
+    }
+
+    public void chinhsua(Schedule schedule){
+
+
+        try{
+            View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_schedule,null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
+            builder.setView(viewDialogStaff);
+            AlertDialog alert = builder.create();
+            alert.show();
+            ArrayAdapter<String> spinArray;
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Schedule");
+
+            DatePicker datePickerDialog = viewDialogStaff.findViewById(R.id.datePickerDialog);
+            Spinner shift = viewDialogStaff.findViewById(R.id.spinScheduleShift);
+            Spinner barista1 = viewDialogStaff.findViewById(R.id.spinScheduleStaffBarista);
+            Spinner barista2 = viewDialogStaff.findViewById(R.id.spinScheduleStaffBarista2);
+            Spinner waiter1 = viewDialogStaff.findViewById(R.id.spinScheduleStaffWaiter);
+            Spinner waiter2 = viewDialogStaff.findViewById(R.id.spinScheduleStaffWaiter2);
+            Spinner guard = viewDialogStaff.findViewById(R.id.spinScheduleStaffGuard);
+            Button btnSave = viewDialogStaff.findViewById(R.id.btnPushSchedule);
+            Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelSchedule);
+            spinArrayBarista = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, lstBarista);
+            getAllBarista();
+            spinArrayBarista.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            barista1.setAdapter(spinArrayBarista);
+            barista2.setAdapter(spinArrayBarista);
+            spinArrayWaiter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, lstWaiter);
+            getAllWaiter();
+            spinArrayWaiter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            waiter2.setAdapter(spinArrayWaiter);
+            waiter1.setAdapter(spinArrayWaiter);
+            spinArrayGuard = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, lstGuard);
+            getAllGuard();
+            spinArrayBarista.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            guard.setAdapter(spinArrayGuard);
+            lstShift.clear();
+            lstShift.add("Ca 1");
+            lstShift.add("Ca 2");
+            lstShift.add("Ca 3");
+            spinArrayShift = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, lstShift);
+            spinArrayShift.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            shift.setAdapter(spinArrayShift);
+            String splitBarista[] = schedule.getStaffBarista().split(",");
+            int getPosBarista1 = spinArrayBarista.getPosition(splitBarista[0].trim());
+            int getPosBarista2 = spinArrayBarista.getPosition(splitBarista[1].trim());
+            barista1.setSelection(getPosBarista1);
+            barista2.setSelection(getPosBarista2);
+            String splitWaiter[] = schedule.getStaffWaiter().split(",");
+            int getPosWaiter1 = spinArrayWaiter.getPosition(splitWaiter[0].trim());
+            int getPosWaiter2 = spinArrayWaiter.getPosition(splitWaiter[1].trim());
+            waiter1.setSelection(getPosWaiter1);
+            waiter2.setSelection(getPosWaiter2);
+            int getPosGuard = spinArrayGuard.getPosition(schedule.getStaffGuard());
+            guard.setSelection(getPosGuard);
+
+            shift.setEnabled(false);
+            datePickerDialog.setEnabled(false);
+
+            btnSave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String newBarista1 = barista1.getSelectedItem().toString();
+                    String newBarista2 = barista2.getSelectedItem().toString();
+                    String newWaiter1 = waiter1.getSelectedItem().toString();
+                    String newWaiter2 = waiter2.getSelectedItem().toString();
+                    String newGuard = guard.getSelectedItem().toString();
+                    schedule.setStaffBarista(newBarista1 +","+ newBarista2);
+                    schedule.setStaffWaiter(newWaiter1 +","+ newWaiter2);
+                    schedule.setStaffGuard(newGuard);
+
+                    myRef.child(schedule.getScheduleID()).updateChildren(schedule.toMap(), new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            Toast.makeText(builder.getContext(), "Update Product Success  !!!",Toast.LENGTH_SHORT).show();
+                            alert.dismiss();
+                        }
+                    });
+                }
+            });
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alert.dismiss();
+                }
+            });
+
+
+        }catch (Exception exception){
+            Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
     }
 
 
