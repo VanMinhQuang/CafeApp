@@ -33,6 +33,7 @@
                 android:name="Khu vực quản lý"
                 android:value="" />
 
+
         </activity>
         <activity
             android:name=".LoginActivity"

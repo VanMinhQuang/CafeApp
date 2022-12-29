@@ -46,10 +46,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
         return new ViewHolder(viewHolder);
     }
 
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
 
     @Override
     public void onBindViewHolder(@NonNull StaffAdapter.ViewHolder holder, int position) {

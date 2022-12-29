@@ -209,32 +209,6 @@ public class StaffFragment extends Fragment {
         return uriName;
     }
 
-    public String uploadImageToFirebase2(Uri uri){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference("StaffImage").child(System.currentTimeMillis() + "." +getFileExtension(uri));
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        uriName2 = uri.toString();
-                        Toast.makeText(getContext(),"Upload Image Successful",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Upload Image Failed!",Toast.LENGTH_SHORT).show();
-            }
-        });
-        return uriName2;
-    }
 
     public String getFileExtension(Uri uri){
         ContentResolver cr = getActivity().getContentResolver();
