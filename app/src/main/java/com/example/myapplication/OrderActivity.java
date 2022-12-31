@@ -1,20 +1,29 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.myapplication.Model.Bill;
+import com.example.myapplication.OrderSite.FoodOrderFragment;
+import com.example.myapplication.OrderSite.ResultOrderFragment;
 import com.example.myapplication.databinding.ActivityAdminBinding;
 import com.example.myapplication.databinding.ActivityOrderBinding;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.Menu;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-public class OrderActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class OrderActivity extends AppCompatActivity  {
     private ActivityOrderBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
     @Override
@@ -30,6 +39,7 @@ public class OrderActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_order);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(binding.navOrder, navController);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -37,7 +47,5 @@ public class OrderActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.bottom_nav_order, menu);
         return true;
     }
-    public void AnhXa(){
 
-    }
 }

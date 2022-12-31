@@ -26,6 +26,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".OrderActivity"
+            android:exported="false"
+            android:label="Order nước uống">
+            <meta-data
+                android:name="Order nước uống"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AdminActivity"
             android:exported="true"
             android:label="Khu vực quản lý">
@@ -53,11 +61,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Cafe Cachabac"
+            android:label="Cafe"
             android:theme="@style/Theme.MyApplication.NoActionBar">
 
             <meta-data
-                android:name="Cafe Cachabac"
+                android:name="Cafe"
                 android:value="" />
         </activity>
     </application>

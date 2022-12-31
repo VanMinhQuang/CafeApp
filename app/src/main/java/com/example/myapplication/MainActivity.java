@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity  {
             case R.id.order_action_bar_item:
                 Intent order = new Intent(this, OrderActivity.class);
                 startActivity(order);
-                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

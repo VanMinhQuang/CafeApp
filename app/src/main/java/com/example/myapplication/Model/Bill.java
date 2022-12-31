@@ -1,57 +1,78 @@
 package com.example.myapplication.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Bill {
-    private int Billid;
-    private int CustomerID;
-    private int StaffID;
-    private int TableID;
+public class Bill implements Parcelable, Serializable {
+    private String ID;
+    private String DrinkName;
+    private float Price;
+    private int quantity;
     private float totalPrice;
-    private Date DateTime;
 
     public Bill() {
     }
 
-    public Bill(int billid, int customerID, int staffID, int tableID, float totalPrice, Date dateTime) {
-        Billid = billid;
-        CustomerID = customerID;
-        StaffID = staffID;
-        TableID = tableID;
+    public Bill(String ID, String drinkName, float price, int quantity, float totalPrice) {
+        this.ID = ID;
+        DrinkName = drinkName;
+        Price = price;
+        this.quantity = quantity;
         this.totalPrice = totalPrice;
-        DateTime = dateTime;
+    }
+    protected Bill(Parcel in){
+        ID = in.readString();
+        DrinkName = in.readString();
+        Price = in.readFloat();
+        quantity = in.readInt();
+        totalPrice = in.readFloat();
     }
 
-    public int getBillid() {
-        return Billid;
+    public static final Creator<Bill> CREATOR = new Creator<Bill>() {
+        @Override
+        public Bill createFromParcel(Parcel in) {
+            return new Bill(in);
+        }
+
+        @Override
+        public Bill[] newArray(int size) {
+            return new Bill[size];
+        }
+    };
+
+    public String getID() {
+        return ID;
     }
 
-    public void setBillid(int billid) {
-        Billid = billid;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public int getCustomerID() {
-        return CustomerID;
+    public String getDrinkName() {
+        return DrinkName;
     }
 
-    public void setCustomerID(int customerID) {
-        CustomerID = customerID;
+    public void setDrinkName(String drinkName) {
+        DrinkName = drinkName;
     }
 
-    public int getStaffID() {
-        return StaffID;
+    public float getPrice() {
+        return Price;
     }
 
-    public void setStaffID(int staffID) {
-        StaffID = staffID;
+    public void setPrice(float price) {
+        Price = price;
     }
 
-    public int getTableID() {
-        return TableID;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setTableID(int tableID) {
-        TableID = tableID;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public float getTotalPrice() {
@@ -62,11 +83,17 @@ public class Bill {
         this.totalPrice = totalPrice;
     }
 
-    public Date getDateTime() {
-        return DateTime;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setDateTime(Date dateTime) {
-        DateTime = dateTime;
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(ID);
+        parcel.writeString(DrinkName);
+        parcel.writeFloat(Price);
+        parcel.writeInt(quantity);
+        parcel.writeFloat(totalPrice);
     }
 }
