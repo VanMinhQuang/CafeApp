@@ -84,13 +84,19 @@ public class MainActivity extends AppCompatActivity  {
                     }else{
                         Toast.makeText(MainActivity.this,"Khu vuc chi danh cho quan ly",Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                }else if(id == R.id.nav_slideshow){
+                    Intent inent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(inent);
+                }
+                else{
                     NavigationUI.onNavDestinationSelected(item, navController);
                 }
                 drawer.close();
                 return true;
             }
+
         });
+
     }
 
 

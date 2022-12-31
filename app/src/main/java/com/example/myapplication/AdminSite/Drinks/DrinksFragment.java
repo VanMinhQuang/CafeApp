@@ -72,9 +72,10 @@ public class DrinksFragment extends Fragment {
     private FloatingActionButton btnAdd;
     private EditText txtID, txtName, txtPrice, txtQuantity;
     private Spinner spinnerProductCategory;
-    private CircleImageView productImg;
+    private CircleImageView productImg, imgProduct;
     private Button btnSave, btnCancel;
     private ActivityResultLauncher<String> launcher;
+    private ActivityResultLauncher<String> launcher2;
     private String uriName = "";
     private ArrayList<String> listCategoryName = new ArrayList<>();
     ArrayAdapter<String> spinArray;
@@ -103,6 +104,13 @@ public class DrinksFragment extends Fragment {
                     return;
                 }
 
+            }
+        });
+        launcher2 = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                imgProduct.setImageURI(result);
+                uploadImageToFirebase(result);
             }
         });
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +204,7 @@ public class DrinksFragment extends Fragment {
             EditText txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
             EditText txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantity);
             Spinner spinCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
-            ImageView imgProduct = viewDialogStaff.findViewById(R.id.product_img);
+            imgProduct = viewDialogStaff.findViewById(R.id.product_img);
             Button btnPush = viewDialogStaff.findViewById(R.id.btnPushProduct);
             Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProduct);
 
@@ -212,6 +220,13 @@ public class DrinksFragment extends Fragment {
             spinCategory.setSelection(getPos);
             Picasso.get().load(product.getProductURI()).into(imgProduct);
             txtID.setEnabled(false);
+
+            imgProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launcher2.launch("image/*");
+                }
+            });
             btnPush.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -220,6 +235,7 @@ public class DrinksFragment extends Fragment {
                     float newPrice = Float.parseFloat(txtPrice.getText().toString().trim());
                     long newQuantity = Long.parseLong(txtQuantity.getText().toString().trim());
                     String newCategorySelect = spinCategory.getSelectedItem().toString();
+                    String newUri = uriName;
 
                     if(TextUtils.isEmpty(newName) || String.valueOf(newPrice) == "" || TextUtils.isEmpty(String.valueOf(newQuantity)) || TextUtils.isEmpty(newCategorySelect)){
                         Toast.makeText(getContext(),"Vui long dien day du thong tin",Toast.LENGTH_LONG).show();
@@ -230,6 +246,7 @@ public class DrinksFragment extends Fragment {
                     product.setCategoryProduct(newCategorySelect);
                     product.setPrice(newPrice);
                     product.setQuantity(newQuantity);
+                    product.setProductURI(newUri);
                     myRef.child(String.valueOf(product.getProductID())).updateChildren(product.toMap(), new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -275,6 +292,7 @@ public class DrinksFragment extends Fragment {
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                Toast.makeText(getContext(),"Uploading...",Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
