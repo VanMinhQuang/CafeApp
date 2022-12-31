@@ -5,11 +5,54 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AdminSite.Schedule.ScheduleFragment">
-
-    <DatePicker
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn ngày"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+            <Button
+                android:id="@+id/btnDatePicker"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:text="20sp"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                style="?android:spinnerStyle"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/rcvSchedule"/>
+    </LinearLayout>
+
+    <com.example.myapplication.MovableFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_person_add_24"
+        android:id="@+id/floatingbtnAddSchedule"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SHIFT MANAGING"
+                android:textSize="35sp"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:background="@drawable/bg_yellow_corner_16_topleft_topright"
+                android:textStyle="bold"/>
+            <DatePicker
+                android:id="@+id/datePickerDialog"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shift:"
+                android:textSize="20sp"/>
+            <Spinner
+                android:id="@+id/spinScheduleShift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@android:string/autofill"
+                android:minHeight="48dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barista:"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinScheduleStaffBarista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@android:string/autofill"
+                android:minHeight="48dp" />
+
+            <Spinner
+                android:id="@+id/spinScheduleStaffBarista2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@android:string/autofill"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waiter:"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinScheduleStaffWaiter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@android:string/autofill"
+                android:minHeight="48dp" />
+
+            <Spinner
+                android:id="@+id/spinScheduleStaffWaiter2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@android:string/autofill"
+                android:minHeight="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guard:"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/spinScheduleStaffGuard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@android:string/autofill"
+                android:minHeight="48dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnPushSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Save" />
+
+                <Button
+                    android:id="@+id/btnCancelSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

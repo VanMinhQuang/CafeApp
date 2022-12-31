@@ -1,4 +1,4 @@
-package com.example.myapplication.OrderSite;
+package com.example.myapplication.ui.home.OrderSite;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,6 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.databinding.ActivityMainBinding;
+import com.example.myapplication.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -82,13 +84,19 @@ public class MainActivity extends AppCompatActivity  {
                     }else{
                         Toast.makeText(MainActivity.this,"Khu vuc chi danh cho quan ly",Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                }else if(id == R.id.nav_slideshow){
+                    Intent inent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(inent);
+                }
+                else{
                     NavigationUI.onNavDestinationSelected(item, navController);
                 }
                 drawer.close();
                 return true;
             }
+
         });
+
     }
 
 
@@ -142,6 +150,7 @@ public class MainActivity extends AppCompatActivity  {
         Picasso.get().load(uri).into(imageStaff);
 
     }
+
 
     public void ProfileMove(){
         Intent profile = new Intent(MainActivity.this, ProfileActivity.class);

@@ -79,6 +79,7 @@ public class Product {
         result.put("categoryProduct", categoryProduct);
         result.put("price",price);
         result.put("quantity",quantity);
+        result.put("productURI",productURI);
         return result;
     }
 }
