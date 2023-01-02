@@ -39,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Product> lstProduct;
     private ICartLoadListener iCartLoadListener;
+    long i;
 
     public ItemAdapter(List<Product> lstProduct,ICartLoadListener iCartLoadListener) {
         this.lstProduct = lstProduct;
@@ -87,7 +88,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     private void addtoCart(Product product) {
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Cart").child(MainActivity.name);
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Cart").child(MainActivity.ID);
         myRef.child(String.valueOf(product.getProductID())).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

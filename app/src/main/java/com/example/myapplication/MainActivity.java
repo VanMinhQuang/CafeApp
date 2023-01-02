@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity  {
     CircleImageView imageStaff;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    public static String name = "";
+    public static String name = "", ID = "";
 
 
     @Override
@@ -146,7 +146,8 @@ public class MainActivity extends AppCompatActivity  {
         position = intent.getExtras().getString("KEY_Position");
         uri = intent.getExtras().getString("KEY_URI");
         id = intent.getExtras().getString("KEY_ID");
-        name = id;
+        ID = id;
+        name = displayName;
         username = intent.getExtras().getString("KEY_UN");
         password = intent.getExtras().getString("KEY_PW");
         phoneNumber = intent.getExtras().getString("KEY_PHONE");

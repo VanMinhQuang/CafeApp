@@ -47,18 +47,13 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
     RecyclerView rcvBills;
     Button btnResult, btnSum;
     ICartLoadListener iCartLoadListener;
-    List<Cart> lstCart;
-    CartAdapter adapter;
-    double sum =0;
+    float sum =0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentResultOrderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         AnhXa(root);
-        lstCart = new ArrayList<>();
-        adapter = new CartAdapter(lstCart);
-        rcvBills.setAdapter(adapter);
         loadCartFromFirebase();
         return root;
     }
@@ -75,13 +70,11 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
 
     }
 
-
     private void loadCartFromFirebase(){
-        lstCart.clear();
+        List<Cart> lstCart = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("Cart")
                 .child(MainActivity.name)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
@@ -93,7 +86,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
                         }else{
                             iCartLoadListener.onCartLoadFail("Empty");
                         }
-                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -106,11 +98,12 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
     @SuppressLint("SetTextI18n")
     @Override
     public void onCartLoadSuccess(List<Cart> cartModelList) {
-
         for(Cart cart: cartModelList){
             sum += cart.getTotalPrice();
         }
         btnSum.setText(sum + "vnđ");
+        CartAdapter adapter = new CartAdapter(cartModelList);
+        rcvBills.setAdapter(adapter);
     }
 
     @Override
