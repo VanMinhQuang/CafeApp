@@ -76,9 +76,13 @@ public class NotificationsFragment extends Fragment {
                 btnPush.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        onClickAddCategory();
-                        alert.dismiss();
+                        if(txtCategoryID.getText().toString().isEmpty() || txtCategoryName.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            onClickAddCategory();
+                            alert.dismiss();
+                        }
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {

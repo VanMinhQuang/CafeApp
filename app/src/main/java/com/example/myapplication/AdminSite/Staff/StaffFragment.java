@@ -152,7 +152,12 @@ public class StaffFragment extends Fragment {
                     public void onClick(View v) {
 
                         try{
-                            onClickAddStaff();
+                            if(txtID.getText().toString().isEmpty() || txtUser.getText().toString().isEmpty()|| txtPhone.getText().toString().isEmpty()|| txtPass.getText().toString().isEmpty() || txtAddress.getText().toString().isEmpty()|| txtDisplay.getText().toString().isEmpty()){
+                                Toast.makeText(getContext(),"Phải nhập đầy đủ thông tin",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                onClickAddStaff();
+                            }
                         }catch (Exception exception){
                             Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
                             return;

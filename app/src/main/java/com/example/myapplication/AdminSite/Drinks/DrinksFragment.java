@@ -145,8 +145,14 @@ public class DrinksFragment extends Fragment {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onClickAddProduct();
-                        alert.dismiss();
+                        if(txtID.getText().toString().isEmpty() || txtName.getText().toString().isEmpty() || txtQuantity.getText().toString().isEmpty() || txtPrice.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            onClickAddProduct();
+                            alert.dismiss();
+                        }
+
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {
