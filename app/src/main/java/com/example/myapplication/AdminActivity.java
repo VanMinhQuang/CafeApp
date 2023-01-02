@@ -30,14 +30,8 @@ public class AdminActivity extends AppCompatActivity  {
                 R.id.navigation_drink, R.id.navigation_table, R.id.navigation_category, R.id.navigation_staff, R.id.navigation_schedule)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_admin);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+       // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 }

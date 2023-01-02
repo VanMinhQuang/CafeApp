@@ -24,14 +24,29 @@
             android:padding="5dp"
             android:text="Price: 20.000"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/txtItemQuantityResultOrder"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Quantity: 1"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnMinus"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:text="-"/>
+            <TextView
+                android:id="@+id/txtItemQuantityResultOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Quantity: 1"
+                android:textSize="20sp" />
+            <Button
+                android:id="@+id/btnPlus"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:text="+"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/txtItemTotalPriceResultOrder"
             android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,17 +43,17 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull BillAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BillAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Bill bill = lstBill.get(position);
         holder.txtDrinkName.setText("Name: " + bill.getDrinkName());
         holder.txtPrice.setText("Price: " + String.valueOf(bill.getPrice()));
         holder.txtQuantity.setText("Quantity: " + String.valueOf(bill.getQuantity()));
         holder.txtTotalPrice.setText("Total: " + String.valueOf(bill.getTotalPrice()));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.adjustBill(bill);
+                minusBillProduct(holder,lstBill.get(position));
             }
         });
     }
@@ -64,8 +65,10 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtDrinkName, txtPrice, txtQuantity, txtTotalPrice;
+        Button btnMinus;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            btnMinus = itemView.findViewById(R.id.btnMinus);
             txtDrinkName = itemView.findViewById(R.id.txtItemDrinkNameResultOrder);
             txtPrice = itemView.findViewById(R.id.txtItemPriceResultOrder);
             txtQuantity = itemView.findViewById(R.id.txtItemQuantityResultOrder);
@@ -73,16 +76,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder>{
         }
     }
 
-    public void deleteProductAsPosition(int pos){
-        Bill bill = lstBill.get(pos);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Bill");
-        myRef.child(String.valueOf(bill.getID())).removeValue(new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-            }
-        });
-        notifyItemRemoved(pos);
-        notifyItemRemoved(pos);
-    }
+   public void minusBillProduct(BillAdapter.ViewHolder viewHolder, Bill bill){
+        if(bill.getQuantity() > 1){
+            bill.setQuantity(bill.getQuantity() -1);
+            bill.setTotalPrice(bill.getQuantity() * bill.getPrice());
+        }
+
+        viewHolder.txtQuantity.setText(new StringBuilder().append(bill.getQuantity()));
+   }
 }

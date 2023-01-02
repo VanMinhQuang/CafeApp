@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Listener.IRecycleViewClickListener;
 import com.example.myapplication.Model.Product;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
@@ -48,6 +49,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Product product = lstProduct.get(position);
         holder.txtName.setText(product.getProductName());
         holder.txtCategoryName.setText(product.getCategoryProduct());
+        holder.txtPrice.setText(String.valueOf(product.getPrice()));
         Picasso.get().load(product.getProductURI()).into(holder.imgProduct, new Callback() {
             @Override
             public void onSuccess() {
@@ -81,16 +83,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtName, txtCategoryName;
+        TextView txtName, txtCategoryName, txtPrice;
         ImageView imgProduct;
         ProgressBar progressBar;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtCategoryName = itemView.findViewById(R.id.txtItemProductCategory);
             txtName = itemView.findViewById(R.id.txtItemProductName);
+            txtPrice = itemView.findViewById(R.id.txtItemPrice);
             imgProduct = itemView.findViewById(R.id.imgItemProduct);
             progressBar = itemView.findViewById(R.id.progressBarProduct);
+
         }
+
+
     }
 
     public void deleteProductAsPosition(int pos){

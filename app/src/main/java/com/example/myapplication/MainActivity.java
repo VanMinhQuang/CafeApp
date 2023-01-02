@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity  {
     CircleImageView imageStaff;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    public static String name = "";
 
 
     @Override
@@ -45,6 +49,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(binding.getRoot());
         AnhXa();
         setSupportActionBar(binding.appBarMain.toolbar);
+
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +104,12 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Cart");
+        myRef.child(MainActivity.name).removeValue();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,6 +118,7 @@ public class MainActivity extends AppCompatActivity  {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -134,6 +146,7 @@ public class MainActivity extends AppCompatActivity  {
         position = intent.getExtras().getString("KEY_Position");
         uri = intent.getExtras().getString("KEY_URI");
         id = intent.getExtras().getString("KEY_ID");
+        name = id;
         username = intent.getExtras().getString("KEY_UN");
         password = intent.getExtras().getString("KEY_PW");
         phoneNumber = intent.getExtras().getString("KEY_PHONE");

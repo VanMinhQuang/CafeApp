@@ -25,8 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Adapter.ItemAdapter;
 import com.example.myapplication.Adapter.ProductAdapter;
+import com.example.myapplication.Listener.ICartLoadListener;
 import com.example.myapplication.Model.Bill;
+import com.example.myapplication.Model.Cart;
 import com.example.myapplication.Model.Product;
 import com.example.myapplication.OrderActivity;
 import com.example.myapplication.R;
@@ -34,6 +37,7 @@ import com.example.myapplication.SwipeCallBack.SwipeItemProduct;
 import com.example.myapplication.databinding.FragmentDrinksBinding;
 import com.example.myapplication.databinding.FragmentFoodOrderBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,8 +56,7 @@ public class FoodOrderFragment extends Fragment {
     private FragmentFoodOrderBinding binding;
     RecyclerView rcvProduct;
     private List<Product> lstProduct;
-    public static ArrayList<Bill> lstBill = new ArrayList<>();
-    ProductAdapter adapter;
+    ItemAdapter adapter;
 
 
     @Override
@@ -61,21 +64,20 @@ public class FoodOrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentFoodOrderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        if(ResultOrderFragment.lstBill != null){
-            lstBill = ResultOrderFragment.lstBill;
-        }
 
         AnhXa(root.getRootView());
         lstProduct = new ArrayList<>();
-        adapter = new ProductAdapter(lstProduct, new ProductAdapter.onClickHelper() {
+        adapter = new ItemAdapter(lstProduct, new ICartLoadListener() {
             @Override
-            public void adjustProduct(Product product) {
-                chooseQuantityInFragment(product);
+            public void onCartLoadSuccess(List<Cart> cartModelList) {
+            }
+
+            @Override
+            public void onCartLoadFail(String message) {
+                Snackbar.make(root.getRootView(),message,Snackbar.LENGTH_LONG).show();
             }
         });
         rcvProduct.setAdapter(adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemProduct(adapter));
-        itemTouchHelper.attachToRecyclerView(rcvProduct);
         getAllProduct();
         return root;
     }
@@ -87,87 +89,7 @@ public class FoodOrderFragment extends Fragment {
         rcvProduct.addItemDecoration(dividerItemDecoration);
 
     }
-    public void chooseQuantityInFragment(Product product){
-        View viewDialogStaff = LayoutInflater.from(getContext()).inflate(R.layout.dialog_drinks_order,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(viewDialogStaff.getContext());
-        builder.setView(viewDialogStaff);
-        AlertDialog alert = builder.create();
-        alert.show();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Product");
 
-
-        //Anh Xa
-        TextView txtID = viewDialogStaff.findViewById(R.id.txtProductIDOrder);
-        TextView txtName = viewDialogStaff.findViewById(R.id.txtProductNameOrder);
-        TextView txtPrice = viewDialogStaff.findViewById(R.id.txtProductPriceOrder);
-        EditText txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantityOrder);
-        TextView txtTotalPrice = viewDialogStaff.findViewById(R.id.txtProductTotalPriceOrder);
-        ImageView imgProduct = viewDialogStaff.findViewById(R.id.product_order_img);
-        Button btnPush = viewDialogStaff.findViewById(R.id.btnPushProductOrder);
-        Button btnCancel = viewDialogStaff.findViewById(R.id.btnCancelProductOrder);
-        txtID.setText("ID: " + product.getProductID());
-        txtName.setText(product.getProductName());
-        txtPrice.setText(String.valueOf(product.getPrice()));
-        txtQuantity.setText("1");
-        txtTotalPrice.setText(String.valueOf(product.getPrice() * Integer.parseInt(txtQuantity.getText().toString())));
-        Picasso.get().load(product.getProductURI()).into(imgProduct);
-
-        txtQuantity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(!txtQuantity.getText().toString().isEmpty()){
-                    if(Integer.parseInt(txtQuantity.getText().toString()) != 0){
-                        txtTotalPrice.setText(String.valueOf(product.getPrice() * Integer.parseInt(txtQuantity.getText().toString())));
-                    }
-                }
-                else{
-                    txtTotalPrice.setText("0");
-                }
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if(!txtQuantity.getText().toString().isEmpty()){
-                    if(Integer.parseInt(txtQuantity.getText().toString()) != 0){
-                        txtTotalPrice.setText(String.valueOf(product.getPrice() * Integer.parseInt(txtQuantity.getText().toString())));
-                    }
-                }
-                else{
-                    txtTotalPrice.setText("0");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(!txtQuantity.getText().toString().isEmpty()){
-                    if(Integer.parseInt(txtQuantity.getText().toString()) != 0){
-                        txtTotalPrice.setText(String.valueOf(product.getPrice() * Integer.parseInt(txtQuantity.getText().toString())));
-                    }
-                }
-                else{
-                    txtTotalPrice.setText("0");
-                }
-            }
-        });
-
-        btnPush.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Do something on Bill
-                Bill bill = new Bill(txtID.getText().toString(), txtName.getText().toString(), Float.parseFloat(txtPrice.getText().toString()) , Integer.parseInt(txtQuantity.getText().toString()), Float.parseFloat(txtTotalPrice.getText().toString()) );
-                lstBill.add(bill);
-                alert.dismiss();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alert.dismiss();
-            }
-        });
-    }
     private void getAllProduct(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Product");

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Bill implements Parcelable, Serializable {
+public class Bill implements Parcelable {
     private String ID;
     private String DrinkName;
     private float Price;

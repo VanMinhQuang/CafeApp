@@ -9,8 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.Model.Bill;
-import com.example.myapplication.OrderSite.FoodOrderFragment;
-import com.example.myapplication.OrderSite.ResultOrderFragment;
+
 import com.example.myapplication.databinding.ActivityAdminBinding;
 import com.example.myapplication.databinding.ActivityOrderBinding;
 import android.os.Bundle;

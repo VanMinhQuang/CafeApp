@@ -2,6 +2,7 @@ package com.example.myapplication.AdminSite.Schedule;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.ScheduleAdapter;
+import com.example.myapplication.AdminSite.Staff.StaffFragment;
 import com.example.myapplication.Model.Schedule;
 import com.example.myapplication.Model.Staff;
 import com.example.myapplication.R;
@@ -74,6 +76,11 @@ public class ScheduleFragment extends Fragment {
         initDatePicker();
         anhxa(root.getRootView());
         lstSchedule = new ArrayList<>();
+        StaffFragment Sta= new StaffFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.nav_host_fragment_content_main, Sta, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
         adapter = new ScheduleAdapter(lstSchedule, new ScheduleAdapter.onClickHelper() {
             @Override
             public void adjustProduct(Schedule schedule) {
