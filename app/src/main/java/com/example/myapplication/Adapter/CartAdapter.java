@@ -40,6 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.name.setText(cart.getName());
         holder.price.setText(cart.getPrice() + "vnđ");
         holder.quantity.setText(String.valueOf(cart.getQuantity()));
+        holder.totalPrice.setText(String.valueOf(cart.getPrice() * cart.getQuantity()));
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

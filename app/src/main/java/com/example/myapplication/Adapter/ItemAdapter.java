@@ -93,6 +93,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     Cart cart = snapshot.getValue(Cart.class);
+                    assert cart != null;
                     cart.setQuantity(cart.getQuantity()+1);
                     Map<String,Object> updateData = new HashMap<>();
                     updateData.put("quantity",cart.getQuantity());
@@ -110,7 +111,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     });
 
                 }else{
-                    Cart cart = new Cart(product.getProductID(),product.getProductName(),product.getPrice(),product.getPrice()* product.getQuantity(),1);
+                    Cart cart = new Cart(product.getProductID(),product.getProductName(),product.getPrice(),product.getPrice(),1);
                     myRef.child(String.valueOf(cart.getId())).setValue(cart).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
