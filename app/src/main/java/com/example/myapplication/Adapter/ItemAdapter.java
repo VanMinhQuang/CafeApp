@@ -112,7 +112,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     });
 
                 }else{
-                    Cart cart = new Cart(product.getProductID(),product.getProductName(),product.getPrice(),product.getPrice(),1);
+                    Cart cart = new Cart();
+                    cart.setId(product.getProductID());
+                    cart.setQuantity(1);
+                    cart.setName(product.getProductName());
+                    cart.setPrice(product.getPrice());
+                    cart.setTotalPrice(product.getPrice());
                     myRef.child(String.valueOf(cart.getId())).setValue(cart).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

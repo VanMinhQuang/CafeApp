@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/navigation_drink"
         android:name="com.example.myapplication.AdminSite.Drinks.DrinksFragment"
-        android:label="@string/title_home"
+        android:label="Products"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_table"
-        android:name="com.example.myapplication.AdminSite.Table.TableFragment"
-        android:label="Table"
+        android:id="@+id/navigation_statistic"
+        android:name="com.example.myapplication.AdminSite.Statistic.StatisticFragment"
+        android:label="Statistic"
         tools:layout="@layout/fragment_table" />
 
     <fragment
@@ -25,12 +25,13 @@
     <fragment
         android:id="@+id/navigation_staff"
         android:name="com.example.myapplication.AdminSite.Staff.StaffFragment"
-        android:label="fragment_staff"
+        android:label="Staff"
         tools:layout="@layout/fragment_staff" />
 
     <fragment
         android:id="@+id/navigation_schedule"
         android:name="com.example.myapplication.AdminSite.Schedule.ScheduleFragment"
-        android:label="Staff"
+        android:label="Staff Schedule"
         tools:layout="@layout/fragment_schedule" />
+
 </navigation>

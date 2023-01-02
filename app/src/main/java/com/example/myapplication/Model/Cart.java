@@ -38,8 +38,8 @@ public class Cart {
         return totalPrice;
     }
 
-    public void setTotalPrice() {
-        this.totalPrice = getPrice() * getQuantity();
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getQuantity() {

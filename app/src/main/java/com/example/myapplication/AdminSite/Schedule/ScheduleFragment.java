@@ -69,18 +69,13 @@ public class ScheduleFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentScheduleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         initDatePicker();
         anhxa(root.getRootView());
         lstSchedule = new ArrayList<>();
-        StaffFragment Sta= new StaffFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment_content_main, Sta, "findThisFragment")
-                .addToBackStack(null)
-                .commit();
         adapter = new ScheduleAdapter(lstSchedule, new ScheduleAdapter.onClickHelper() {
             @Override
             public void adjustProduct(Schedule schedule) {

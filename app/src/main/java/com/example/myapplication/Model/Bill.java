@@ -6,42 +6,19 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Bill implements Parcelable {
+public class Bill  {
     private String ID;
-    private String DrinkName;
-    private float Price;
-    private int quantity;
     private float totalPrice;
+    private String dateTime;
 
     public Bill() {
     }
 
-    public Bill(String ID, String drinkName, float price, int quantity, float totalPrice) {
+    public Bill(String ID, float totalPrice, String dateTime) {
         this.ID = ID;
-        DrinkName = drinkName;
-        Price = price;
-        this.quantity = quantity;
         this.totalPrice = totalPrice;
+        this.dateTime = dateTime;
     }
-    protected Bill(Parcel in){
-        ID = in.readString();
-        DrinkName = in.readString();
-        Price = in.readFloat();
-        quantity = in.readInt();
-        totalPrice = in.readFloat();
-    }
-
-    public static final Creator<Bill> CREATOR = new Creator<Bill>() {
-        @Override
-        public Bill createFromParcel(Parcel in) {
-            return new Bill(in);
-        }
-
-        @Override
-        public Bill[] newArray(int size) {
-            return new Bill[size];
-        }
-    };
 
     public String getID() {
         return ID;
@@ -49,30 +26,6 @@ public class Bill implements Parcelable {
 
     public void setID(String ID) {
         this.ID = ID;
-    }
-
-    public String getDrinkName() {
-        return DrinkName;
-    }
-
-    public void setDrinkName(String drinkName) {
-        DrinkName = drinkName;
-    }
-
-    public float getPrice() {
-        return Price;
-    }
-
-    public void setPrice(float price) {
-        Price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public float getTotalPrice() {
@@ -83,17 +36,11 @@ public class Bill implements Parcelable {
         this.totalPrice = totalPrice;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getDateTime() {
+        return dateTime;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(ID);
-        parcel.writeString(DrinkName);
-        parcel.writeFloat(Price);
-        parcel.writeInt(quantity);
-        parcel.writeFloat(totalPrice);
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }

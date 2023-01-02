@@ -7,11 +7,11 @@
     <fragment
         android:id="@+id/navigation_result_order"
         android:name="com.example.myapplication.ui.home.OrderSite.ResultOrderFragment"
-        android:label="fragment_result_order"
+        android:label="Order"
         tools:layout="@layout/fragment_result_order" />
     <fragment
         android:id="@+id/navigation_drink_order"
         android:name="com.example.myapplication.ui.home.OrderSite.FoodOrderFragment"
-        android:label="fragment_food_order"
+        android:label="Result"
         tools:layout="@layout/fragment_food_order" />
 </navigation>

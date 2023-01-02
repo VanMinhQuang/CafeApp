@@ -1,5 +1,6 @@
 package com.example.myapplication.SwipeCallBack;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
@@ -36,6 +37,7 @@ public class SwipeItemCart extends ItemTouchHelper.SimpleCallback {
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         adapter.notifyDataSetChanged();

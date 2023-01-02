@@ -7,9 +7,9 @@
         android:title="Drinks" />
 
     <item
-        android:id="@+id/navigation_table"
+        android:id="@+id/navigation_statistic"
         android:icon="@drawable/ic_baseline_table_bar_24"
-        android:title="Table" />
+        android:title="Statistic" />
 
     <item
         android:id="@+id/navigation_category"
@@ -23,5 +23,6 @@
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_baseline_schedule_24"
         android:title="Staff Schedule" />
+
 
 </menu>

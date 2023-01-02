@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Cart");
-        myRef.child(MainActivity.name).removeValue();
+        myRef.child(MainActivity.ID).removeValue();
     }
 
     @Override

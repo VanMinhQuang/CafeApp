@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminSite.Statistic.StatisticFragment"
+    android:orientation="vertical">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Tong"
+        android:id="@+id/btnSumStatistic"
+        android:enabled="false"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="1,2,3">
+        <TableRow>
+            <TextView
+                android:text="ID"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_column="1"
+                />
+            <TextView
+                android:text="Date"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_column="1"
+                />
+            <TextView
+                android:text="Total"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:layout_column="1"
+                />
+        </TableRow>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="60dp"
+            android:id="@+id/rcvStatistic"/>
+
+    </TableLayout>
+
+
+
+</LinearLayout>
+
