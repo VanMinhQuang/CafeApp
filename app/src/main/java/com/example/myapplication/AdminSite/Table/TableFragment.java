@@ -85,9 +85,13 @@ public class TableFragment extends Fragment {
                 btnPush.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        onClickAddTable();
-                        alert.dismiss();
+                        if(txtTableID.getText().toString().isEmpty()){
+                            Toast.makeText(getContext(), "Vui lòng nhập thông tin bàn", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            onClickAddTable();
+                            alert.dismiss();
+                        }
                     }
                 });
                 btnCancel.setOnClickListener(new View.OnClickListener() {

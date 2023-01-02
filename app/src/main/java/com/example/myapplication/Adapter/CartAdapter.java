@@ -108,7 +108,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         Cart cart = lstCart.get(pos);
         lstCart.remove(pos);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Cart/3");
+        DatabaseReference myRef = database.getReference("Cart/" + MainActivity.ID);
         myRef.child(String.valueOf(cart.getId())).removeValue(new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {

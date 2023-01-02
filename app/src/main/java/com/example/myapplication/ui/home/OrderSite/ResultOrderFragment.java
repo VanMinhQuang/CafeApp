@@ -103,6 +103,8 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
         myRef.child(id).child("TotalPrice").setValue(String.valueOf(sum));
         myRef.child(id).child("Table").setValue("Đợi da đen làm");
 
+
+        lstCart.clear();
     }
     private void loadCartFromFirebase(){
         FirebaseDatabase.getInstance().getReference("Cart")
