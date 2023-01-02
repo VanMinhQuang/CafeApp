@@ -23,7 +23,6 @@ import com.example.myapplication.Adapter.CartAdapter;
 import com.example.myapplication.Listener.ICartLoadListener;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Model.Bill;
-import com.example.myapplication.Model.BillInfo;
 import com.example.myapplication.Model.Cart;
 import com.example.myapplication.R;
 import com.example.myapplication.SwipeCallBack.SwipeItemCart;
@@ -73,27 +72,25 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
     public void onClickAddBill(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Bill");
-        DatabaseReference myRef2 = database.getReference("BillInfo");
         String currentDateTime = java.text.DateFormat.getDateTimeInstance().format(new Date());
         float totalPrice = Float.parseFloat(btnSum.getText().toString());
         String id = myRef.push().getKey();
         List<Cart> lstCartToAdd = lstCart;
-        Bill bill = new Bill(id, totalPrice, currentDateTime);
-        BillInfo billInfo = new BillInfo(id, lstCartToAdd);
+        Bill bill = new Bill(id, totalPrice, currentDateTime,lstCart);
         new AlertDialog.Builder(getContext())
                 .setTitle("Thanh toán")
                 .setMessage("Bạn có muốn thanh toán không ?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        myRef.child(id).setValue(bill);
-                        myRef2.child(id).setValue(billInfo, new DatabaseReference.CompletionListener() {
+                        myRef.child(id).setValue(bill, new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 getActivity().onBackPressed();
                                 Snackbar.make(btnSum.getRootView(),"Thanh toán thành công",Snackbar.LENGTH_LONG).show();
                             }
                         });
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

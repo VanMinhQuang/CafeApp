@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.myapplication.Adapter.BillAdapter;
+import com.example.myapplication.Adapter.BillInfoAdapter;
 import com.example.myapplication.Model.Bill;
+import com.example.myapplication.Model.Cart;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentStatisticBinding;
 import com.google.firebase.database.ChildEventListener;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ public class StatisticFragment extends Fragment {
 
     private FragmentStatisticBinding binding;
     private List<Bill> lstBill;
+    private List<Cart> lstCart;
     private RecyclerView rcvStatistic;
     private Button btnSum;
     private BillAdapter adapter;
@@ -44,11 +49,17 @@ public class StatisticFragment extends Fragment {
         View root = binding.getRoot();
         anhXa(root.getRootView());
         lstBill = new ArrayList<>();
-        adapter = new BillAdapter(lstBill);
+        adapter = new BillAdapter(lstBill, new BillAdapter.OnGetAllProduct() {
+            @Override
+            public void getAllCart() {
+            }
+        });
         rcvStatistic.setAdapter(adapter);
         getAllBill();
         return root;
     }
+
+
 
     public void getAllBill(){
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Bill");
