@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,8 +84,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 addtoCart(product);
             }
         });
+    }
 
-
+    public void filterList(ArrayList<Product> filterlist) {
+        // below line is to add our filtered
+        // list in our course array list.
+        lstProduct = filterlist;
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged();
     }
 
     private void addtoCart(Product product) {
