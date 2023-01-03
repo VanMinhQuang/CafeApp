@@ -127,8 +127,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
                     iCartLoadListener.onCartLoadSuccess(lstCart);
                     adapter.notifyDataSetChanged();
                 }
-
-
             }
 
             @Override
@@ -136,7 +134,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
                 Cart cart = snapshot.getValue(Cart.class);
                 if(cart == null || lstCart == null || lstCart.isEmpty())
                     return;
-
                 for(int i=0;i<lstCart.size();i++){
                     if(cart.getId() == lstCart.get(i).getId()){
                         lstCart.set(i, cart);
@@ -144,7 +141,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
                         break;
                     }
                 }
-
                 adapter.notifyDataSetChanged();
             }
 
@@ -160,19 +156,13 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
                         break;
                     }
                 }
-
                 adapter.notifyDataSetChanged();
             }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
