@@ -1,4 +1,4 @@
-package com.example.myapplication.AdminSite.Statistic;
+package com.example.myapplication.ui.Statistic;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -8,11 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,22 +20,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.BillAdapter;
-import com.example.myapplication.Adapter.BillInfoAdapter;
 import com.example.myapplication.Model.Bill;
-import com.example.myapplication.Model.Cart;
-import com.example.myapplication.Model.Schedule;
 import com.example.myapplication.R;
-import com.example.myapplication.SwipeCallBack.SwipeItemBill;
-import com.example.myapplication.SwipeCallBack.SwipeItemCategory;
+import com.example.myapplication.databinding.FragmentEmployeeStatisticBinding;
 import com.example.myapplication.databinding.FragmentStatisticBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -48,19 +40,21 @@ import java.util.Date;
 import java.util.List;
 
 
-public class StatisticFragment extends Fragment {
+public class EmployeeStatisticFragment extends Fragment {
 
-    private FragmentStatisticBinding binding;
+
+    private FragmentEmployeeStatisticBinding binding;
     private List<Bill> lstBill;
     private RecyclerView rcvStatistic;
     private EditText txtStatisticDateStart, txtStatisticDateEnd;
     private Button btnSum, btnDateStart, btnDateEnd,btnShow, btnFirstShift, btnSecondShift,btnThirdShift;
     private BillAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentStatisticBinding.inflate(inflater, container, false);
+        binding = FragmentEmployeeStatisticBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         anhXa(root.getRootView());
         lstBill = new ArrayList<>();
@@ -154,11 +148,9 @@ public class StatisticFragment extends Fragment {
                 getAllBill(dateStart,dateEnd);
             }
         });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeItemBill(adapter));
-        itemTouchHelper.attachToRecyclerView(rcvStatistic);
-
         return root;
     }
+
     private boolean checktimings(String time, String timeStart, String endtime) {
 
         String pattern = "HH:mm:ss";

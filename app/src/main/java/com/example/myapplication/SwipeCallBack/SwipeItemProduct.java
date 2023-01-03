@@ -26,8 +26,8 @@ public class SwipeItemProduct extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int pos = viewHolder.getAdapterPosition();
         new AlertDialog.Builder(viewHolder.itemView.getContext())
-                .setTitle("Xóa Món hàng")
-                .setMessage("Bạn có muốn xóa món hàng này không ?")
+                .setTitle("Delete Product")
+                .setMessage("Are you sure you want to delete this Product?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

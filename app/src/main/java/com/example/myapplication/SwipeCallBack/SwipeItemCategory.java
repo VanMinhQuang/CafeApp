@@ -28,8 +28,8 @@ public class SwipeItemCategory extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int pos = viewHolder.getAdapterPosition();
         new AlertDialog.Builder(viewHolder.itemView.getContext())
-                .setTitle("Xóa danh mục")
-                .setMessage("Bạn có muốn xóa danh mục thực phẩm không ?")
+                .setTitle("Delete Category")
+                .setMessage("Are you sure you want to delete this Category?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

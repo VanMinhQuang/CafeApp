@@ -34,7 +34,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -72,11 +75,14 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
     public void onClickAddBill(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Bill");
-        String currentDateTime = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+        String currentDate = dateFormat.format(Calendar.getInstance().getTime());
+        @SuppressLint("SimpleDateFormat") DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        String currentTime = timeFormat.format(Calendar.getInstance().getTime());
         float totalPrice = Float.parseFloat(btnSum.getText().toString());
         String id = myRef.push().getKey();
         List<Cart> lstCartToAdd = lstCart;
-        Bill bill = new Bill(id, totalPrice, currentDateTime,lstCart);
+        Bill bill = new Bill(id, totalPrice, currentDate,currentTime,lstCart);
         new AlertDialog.Builder(getContext())
                 .setTitle("Thanh toán")
                 .setMessage("Bạn có muốn thanh toán không ?")
@@ -88,6 +94,9 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 getActivity().onBackPressed();
                                 Snackbar.make(btnSum.getRootView(),"Thanh toán thành công",Snackbar.LENGTH_LONG).show();
+                                DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("Cart");
+                                myRef.child(MainActivity.ID).removeValue();
+
                             }
                         });
 

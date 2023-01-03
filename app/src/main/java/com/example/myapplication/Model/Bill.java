@@ -10,17 +10,35 @@ import java.util.List;
 public class Bill  {
     private String ID;
     private float totalPrice;
-    private String dateTime;
+    private String date;
+    private String time;
     private List<Cart> listCart;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public Bill() {
     }
 
 
-    public Bill(String ID, float totalPrice, String dateTime,List<Cart> listCart) {
+    public Bill(String ID, float totalPrice, String date,String time,List<Cart> listCart) {
         this.ID = ID;
         this.totalPrice = totalPrice;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.listCart = listCart;
     }
 
@@ -48,11 +66,4 @@ public class Bill  {
         this.totalPrice = totalPrice;
     }
 
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
 }

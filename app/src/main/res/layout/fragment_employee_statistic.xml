@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminSite.Statistic.StatisticFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.Statistic.EmployeeStatisticFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -135,6 +136,4 @@
     </TableLayout>
 
 
-
 </LinearLayout>
-

@@ -28,12 +28,13 @@ public class SwipeItemCart extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int pos = viewHolder.getAdapterPosition();
         new AlertDialog.Builder(viewHolder.itemView.getContext())
-                .setTitle("Xóa bill")
-                .setMessage("Bạn có muốn xóa thông tin bill không ?")
+                .setTitle("Xóa đồ uống")
+                .setMessage("Bạn có muốn xóa đồ uống này không?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         adapter.deleteCartAsPosition(pos);
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

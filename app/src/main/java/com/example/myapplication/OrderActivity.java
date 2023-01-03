@@ -40,11 +40,6 @@ public class OrderActivity extends AppCompatActivity  {
         NavigationUI.setupWithNavController(binding.navOrder, navController);
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.bottom_nav_order, menu);
-        return true;
-    }
+
 
 }

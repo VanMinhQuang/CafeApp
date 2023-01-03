@@ -27,8 +27,8 @@ public class SwipeItemStaff extends ItemTouchHelper.SimpleCallback {
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int pos = viewHolder.getAdapterPosition();
         new AlertDialog.Builder(viewHolder.itemView.getContext())
-                .setTitle("Xóa nhân viên")
-                .setMessage("Bạn có muốn xóa nhân viên không ?")
+                .setTitle("Delete Staff")
+                .setMessage("Are you sure you want to delete this Staff?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

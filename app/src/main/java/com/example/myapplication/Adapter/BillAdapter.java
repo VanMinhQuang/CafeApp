@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Model.Bill;
 import com.example.myapplication.Model.Cart;
+import com.example.myapplication.Model.Category;
 import com.example.myapplication.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,8 +49,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull BillAdapter.ViewHolder holder, int position) {
         Bill bill = lstBill.get(position);
         holder.txtID.setText(bill.getID());
-        holder.txtDate.setText(bill.getDateTime());
+        holder.txtDate.setText(bill.getDate());
         holder.txtPrice.setText(String.valueOf(bill.getTotalPrice()));
+        holder.txtTime.setText(String.valueOf(bill.getTime()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,12 +75,13 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtID, txtDate, txtPrice;
+        TextView txtID, txtDate,txtTime, txtPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtID = itemView.findViewById(R.id.txtItemBillID);
             txtDate = itemView.findViewById(R.id.txtItemBillDate);
             txtPrice = itemView.findViewById(R.id.txtItemBillTotalPrice);
+            txtTime = itemView.findViewById(R.id.txtItemBillTime);
         }
     }
     public void getAll(Bill bill,BillInfoAdapter adapter){
@@ -99,5 +103,16 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
 
             }
         });
+    }
+    public void deleteBillAsPosition(int pos){
+        Bill bill = lstBill.get(pos);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Bill");
+        myRef.child(String.valueOf(bill.getID())).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+            }
+        });
+        notifyItemRemoved(pos);
     }
 }
