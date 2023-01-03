@@ -28,6 +28,7 @@ import java.util.zip.Inflater;
 public class LoginActivity extends AppCompatActivity {
     private EditText username,password, usernameForgot, PhoneForgot, passwordForgot;
     private Button signInBtn, forgotBtn,resetBtn;
+    public static String idStaff, positionStaff, displayNameStaff, usernameStaff, passwordStaff, uriStaff, phoneStaff, addressStaff;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                         String b = itemSnapshot.child("password").getValue().toString();
                         if( a.equals(un)&& b.equals(pw)){
                             Move(itemSnapshot);
+                            onStop();
                             break;
                         }
                         else{

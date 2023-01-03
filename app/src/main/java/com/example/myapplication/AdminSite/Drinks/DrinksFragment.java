@@ -74,7 +74,9 @@ public class DrinksFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDrinksBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         anhxa(root.getRootView());
+
         lstProduct = new ArrayList<>();
         adapter = new ProductAdapter(lstProduct, new ProductAdapter.onClickHelper() {
             @Override

@@ -51,7 +51,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull StaffAdapter.ViewHolder holder, int position) {
         Staff s = lstStaff.get(position);
         holder.txtID.setText(String.valueOf(s.getId()));
-        holder.txtName.setText(s.getUsername());
+        holder.txtName.setText(s.getDisplayName());
         holder.txtPos.setText(s.getPosition());
         Picasso.get().load(s.getImageURI()).into(holder.imgCircleAvatar, new Callback() {
             @Override

@@ -7,13 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -27,7 +24,6 @@ import com.example.myapplication.Model.Staff;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
     EditText passwordET, addressET, phoneET,displayNameET;
     Button changeBtn;
     CircleImageView profileImage;
-    String displayName, position, uriprofile, username,password, address, phoneNumber, id;
+    String displayName, position, uriProfile, username,password, address, phoneNumber, id;
     String uriName;
     ActivityResultLauncher<String> launcher;
     @Override
@@ -73,13 +69,13 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         displayName= intent.getExtras().getString("KEY_Display_Name");
         position = intent.getExtras().getString("KEY_Position");
-        uriprofile = intent.getExtras().getString("KEY_URI");
+        uriProfile = intent.getExtras().getString("KEY_URI");
         id = intent.getExtras().getString("KEY_ID");
         password = intent.getExtras().getString("KEY_PW");
         phoneNumber = intent.getExtras().getString("KEY_PHONE");
         address = intent.getExtras().getString("KEY_ADDRESS");
         username = intent.getExtras().getString("KEY_UN");
-        Staff s = new Staff(Integer.parseInt(id),username,password,address,phoneNumber, displayName, position, uriprofile);
+        Staff s = new Staff(Integer.parseInt(id),username,password,address,phoneNumber, displayName, position, uriProfile);
         //Khởi tạo đường dẫn cho các biến
         profileImage = findViewById(R.id.imageProfile);
         maNV = findViewById(R.id.idNameProfile);
@@ -91,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
         changeBtn = findViewById(R.id.changeProfileBtn);
         //Set các giá trị
 
-        Picasso.get().load(uriprofile).into(profileImage);
+        Picasso.get().load(uriProfile).into(profileImage);
         maNV.setText(id);
         displayNameET.setText(displayName);
         phoneET.setText(phoneNumber);
@@ -114,7 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
                 String newDisplay = displayNameET.getText().toString().trim();
                 String newPhone = phoneET.getText().toString().trim();
                 String newAddress = addressET.getText().toString().trim();
-                String newUri = uriName;
+                String newUri = uriProfile;
 
                 s.setPassword(newPass);
                 s.setAddress(newAddress);
@@ -139,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String uploadImageToFirebase(Uri uri){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        uriName = "";
+        uriProfile = "";
         StorageReference storageReference = storage.getReference("TestImage").child(System.currentTimeMillis() + "." +getFileExtension(uri));
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -151,7 +147,7 @@ public class ProfileActivity extends AppCompatActivity {
                         result.addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                uriName = uri.toString();
+                                uriProfile = uri.toString();
                                 Toast.makeText(ProfileActivity.this, "Thành công",Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -169,7 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(ProfileActivity.this, "Upload Image Failed!",Toast.LENGTH_SHORT).show();
             }
         });
-        return uriName;
+        return uriProfile;
     }
     public void AnhXaEditText(){
         displayNameET.addTextChangedListener(new TextWatcher() {

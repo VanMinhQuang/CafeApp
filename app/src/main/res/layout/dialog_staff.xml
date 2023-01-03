@@ -52,7 +52,7 @@
                     android:id="@+id/txtStaffUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="User Name"
+                    android:hint="Username"
                     android:minHeight="48dp"
                     android:inputType="text"/>
 
@@ -60,7 +60,7 @@
                     android:id="@+id/txtStaffPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Pasword"
+                    android:hint="Password"
                     android:minHeight="48dp"
                     android:inputType="textPassword"/>
 
