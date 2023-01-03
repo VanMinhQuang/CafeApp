@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_thongbao"
             android:title="Thông báo" />
         <item
             android:id="@+id/nav_employeeStatistic"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_thongke"
             android:title="Thống kê" />
         <item
             android:id="@+id/nav_gallery"
@@ -23,7 +23,7 @@
             android:title="Admin Site" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_baseline_cancel_24"
             android:title="Thoát" />
     </group>
 </menu>

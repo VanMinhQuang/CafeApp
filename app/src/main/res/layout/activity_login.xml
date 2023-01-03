@@ -4,41 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="@drawable/gradientbg2"
     android:orientation="vertical"
     tools:context=".LoginActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:fontFamily="@font/kaushan_script"
+        android:text="One cup one moment"
+        android:layout_marginTop="20dp"
+        android:textColor="#3C2A21"
+        android:layout_gravity="center"
+        ></TextView>
 
     <ImageView
         android:id="@+id/logoSignInImg"
-        android:src="@drawable/ic_baseline_table_bar_24"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_width="200dp"
+        android:layout_width="391dp"
+        android:layout_height="158dp"
         android:layout_gravity="center"
-        android:layout_height="200dp"/>
+        android:src="@drawable/cflogo" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:text="Username" />
+        android:fontFamily="@font/kaushan_script"
+        android:text="Username"
+        android:textColor="#3C2A21"
+        android:textSize="30sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
 
     <EditText
         android:id="@+id/usernameLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:drawableStart="@drawable/username"
+        android:paddingLeft="10dp"
         android:hint="Username"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:drawablePadding="10dp"
+        android:background="@drawable/custom_input"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:text="Password" />
+        android:fontFamily="@font/kaushan_script"
+        android:text="Password"
+        android:textColor="#3C2A21"
+        android:textSize="30sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
 
     <EditText
         android:id="@+id/passwordLogin"
@@ -48,34 +69,40 @@
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:drawableStart="@drawable/password"
+        android:drawablePadding="10dp"
+        android:background="@drawable/custom_input"
+        android:paddingLeft="10dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
-
-        <Button
-            android:id="@+id/signInBtn"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="Sign In" />
-
-        <Button
-            android:id="@+id/signUpBtn"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="2"
-            android:text="Sign Up" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/forgotPasswordBtn"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/signInBtn"
+        android:layout_width="275dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:text="Forgot password?"/>
+        android:layout_marginTop="30dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/autour_one"
+        android:text="Login"
+        android:textStyle="bold"
+        android:textColor="#EFDCB4"
+        android:textSize="20sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/forgotPasswordBtn"
+        android:layout_width="275dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/autour_one"
+        android:text="FORGOT PASSWORD"
+        android:textStyle="bold"
+        android:textColor="#EFDCB4"
+        android:textSize="20sp" />
+
+
 </LinearLayout>

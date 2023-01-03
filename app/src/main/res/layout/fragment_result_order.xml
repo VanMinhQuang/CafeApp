@@ -9,21 +9,29 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thanh toán"
-        android:id="@+id/btnResult"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/btnSUM"
-        android:text="0"
+        android:text="0 VND"
+        android:textSize="30dp"
+        android:textStyle="bold"
         android:enabled="false"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnResult"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="#E8E3BA"
+        android:text="CONFIRM"
+        android:textSize="25dp"
+        android:fontFamily="@font/autour_one"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_margin="15dp"
+        android:background="@drawable/custom_button"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvBillsOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:clipToPadding="false"
-        android:paddingEnd="10dp"/>
-
+        android:clipToPadding="false" />
 
 </LinearLayout>

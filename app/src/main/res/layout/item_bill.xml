@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#86ECE4E9"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -15,6 +16,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Name: Trà Sữa"
+            android:textStyle="bold"
             android:textSize="20sp" />
 
         <TextView
@@ -23,28 +25,49 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="Price: 20.000"
+            android:textStyle="bold"
             android:textSize="20sp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="Quantity"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnMinus"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:text="-"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:text="-"
+                android:textStyle="bold"
+                android:background="@drawable/custom_button_circle_red"
+                />
             <TextView
                 android:id="@+id/txtItemQuantityResultOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Quantity: 1"
-                android:textSize="20sp" />
-            <Button
+                android:text="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:width="30dp"
+                android:height="30dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:background="@drawable/custom_input"/>
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPlus"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:text="+"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:text="+"
+                android:background="@drawable/custom_button_circle"/>
         </LinearLayout>
 
         <TextView
@@ -52,8 +75,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Total Price: 20.000"
-            android:textSize="20sp" />
+            android:text="Total Price: 20.000 "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:paddingBottom="10dp"/>
+
     </LinearLayout>
 
 </FrameLayout>

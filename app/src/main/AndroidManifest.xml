@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-        tools:targetApi="31">
+        tools:targetApi="28">
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
@@ -46,7 +46,8 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:label="Đăng nhập">
+            android:label="Đăng nhập"
+            android:theme = "@style/Theme.AppCompat.DayNight.NoActionBar">
             <meta-data
                 android:name="Đăng nhập"
                 android:value="" />
@@ -69,6 +70,10 @@
                 android:name="Cafe"
                 android:value="" />
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
