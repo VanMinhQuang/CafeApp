@@ -14,7 +14,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chọn ngày"
+            android:text="SHIFT OF DAY"
+            android:fontFamily="@font/autour_one"
+            android:textStyle="bold"
             android:textSize="30sp"
             android:textColor="@color/black"
             android:layout_marginTop="20dp"
@@ -31,6 +33,7 @@
                 android:layout_width="250dp"
                 android:layout_height="match_parent"
                 android:text="20sp"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 android:layout_gravity="center"
                 style="?android:spinnerStyle"

@@ -9,14 +9,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="asdasd"
-        android:textColor="#FF0000"
+        android:textColor="#967259"
         android:textSize="25sp"
+        android:fontFamily="@font/autour_one"
+        android:textStyle="bold"
         android:id="@+id/txtNotificationName"/>
     <TextView
         android:id="@+id/txtNotificationText"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="asdasd"
         android:inputType="textMultiLine"
         tools:ignore="TextViewEdits" />
@@ -24,7 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="day time"
-        android:textSize="13sp"
+        android:textSize="10sp"
+        android:layout_gravity="right"
+        android:paddingTop="20dp"
         android:id="@+id/txtNotificationDate"/>
 
 </LinearLayout>

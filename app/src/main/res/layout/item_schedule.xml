@@ -8,10 +8,12 @@
         android:id="@+id/txtItemScheduleShift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ca"
-        android:textColor="@android:color/holo_red_dark"
+        android:text="SHIFT"
+        android:fontFamily="@font/autour_one"
+        android:textColor="#06BDAC"
         android:textStyle="bold"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:layout_margin="10dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,16 +22,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Barista: "
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
+            android:fontFamily="@font/autour_one"
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/txtItemScheduleBarista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/autour_one"
             android:text="Barista: "
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:layout_marginRight="10dp"
             android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
@@ -40,8 +46,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Waiter: "
+            android:layout_marginBottom="10dp"
+
+            android:fontFamily="@font/autour_one"
             android:textColor="@android:color/black"
             android:textStyle="bold"
+            android:layout_marginLeft="10dp"
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/txtItemScheduleWaiter"
@@ -49,8 +59,9 @@
             android:layout_height="wrap_content"
             android:text="Ư: "
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:fontFamily="@font/autour_one"
+            android:textSize="20sp"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -60,16 +71,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Guard: "
+            android:fontFamily="@font/autour_one"
             android:textColor="@android:color/black"
             android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
             android:textSize="20sp"/>
+
         <TextView
             android:id="@+id/txtItemScheduleGuard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Barista: "
+            android:fontFamily="@font/autour_one"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:layout_marginRight="10dp"
             android:textSize="20sp"/>
     </LinearLayout>
 

@@ -14,33 +14,43 @@
             android:layout_height="wrap_content"
             android:text="CATEGORY MANAGING"
             android:textSize="35sp"
-            android:padding="12dp"
-            android:textColor="@color/black"
+            android:fontFamily="@font/autour_one"
+            android:padding="10dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:background="@drawable/bg_yellow_corner_16_topleft_topright"
+            android:background="@drawable/custom_button_dateend"
             android:textStyle="bold"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:layout_height="153dp"
+            android:layout_margin="10dp"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
             <EditText
                 android:id="@+id/txtCategoryID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_input"
                 android:hint="ID"
+                android:inputType="numberDecimal"
                 android:minHeight="48dp"
-                android:inputType="numberDecimal"/>
+                android:paddingLeft="20dp" />
 
             <EditText
                 android:id="@+id/txtCategoryName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_input"
                 android:hint="Name"
+                android:inputType="text"
                 android:minHeight="48dp"
-                android:inputType="text"/>
+                android:paddingLeft="20dp" />
 
         </LinearLayout>
 
@@ -49,19 +59,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2">
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPushCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#1AD622"
                 android:text="Save"
+                android:fontFamily="@font/autour_one"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/white"
                 android:layout_weight="1"/>
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnCancelCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:text="Cancel"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#F44336"
+                android:fontFamily="@font/autour_one"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/white"
                 android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>

@@ -11,21 +11,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="10">
+
         <EditText
-            android:enabled="false"
+            android:textStyle="italic"
+            android:textColor="#2980B9"
             android:id="@+id/txtStatisticDateStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="20sp"
             android:layout_weight="9"
+            android:background="@drawable/date_bill_input"
+            android:enabled="false"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="20dp"
             android:inputType="datetime"
-            />
-        <Button
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:padding="5dp"/>
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnStatisticDateStart"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Date Start"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/autour_one"
+            android:background="@drawable/custom_button_datestart"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -35,64 +48,119 @@
         android:orientation="horizontal"
         android:weightSum="10">
         <EditText
+            android:padding="5dp"
+            android:textColor="#ee9ca7"
+            android:textStyle="italic"
+            android:textAlignment="center"
             android:id="@+id/txtStatisticDateEnd"
             android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
+            android:background="@drawable/date_bill_input"
             android:textSize="20sp"
             android:layout_weight="9"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="20dp"
             />
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnStatisticDateEnd"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Date End"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:fontFamily="@font/autour_one"
+            android:background="@drawable/custom_button_dateend"
             android:layout_weight="1"/>
 
     </LinearLayout>
+    <View
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="3dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/custom_button"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="BILL OF SHIFT"
+        android:fontFamily="@font/autour_one"
+        android:textSize="30dp"
+        android:layout_gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="3"
         android:layout_margin="5dp">
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="First Shift"
+            android:text="SHIFT 1"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/custom_button_circle_shift"
             android:layout_margin="10dp"
+            android:fontFamily="@font/autour_one"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:id="@+id/btnFirstShift"
-            android:layout_weight="1"/>
-        <Button
+            android:layout_weight="1" />
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Second Shift"
+            android:text="SHIFT 2"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/custom_button_circle_shift"
             android:layout_margin="10dp"
+            android:fontFamily="@font/autour_one"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:id="@+id/btnSecondShift"
             android:layout_weight="1"/>
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Third Shift"
+            android:text="SHIFT 3"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/custom_button_circle_shift"
             android:layout_margin="10dp"
+            android:fontFamily="@font/autour_one"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:id="@+id/btnThirdShift"
             android:layout_weight="1"/>
     </LinearLayout>
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/autour_one"
+        android:textSize="22sp"
+        android:backgroundTint="#43c6ac"
+        android:textStyle="bold"
         android:id="@+id/btnShow"
         android:text="Show All Data"/>
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:textSize="20dp"
+        android:layout_marginTop="10dp"
         android:text="Tong"
+        android:fontFamily="@font/autour_one"
+        android:textStyle="bold"
+        android:textColor="#4CAF50"
         android:id="@+id/btnSumStatistic"
         android:enabled="false"/>
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:stretchColumns="1,2,3">
         <TableRow>
             <TextView
@@ -101,29 +169,40 @@
                 android:padding="10dp"
                 android:gravity="center"
                 android:layout_column="1"
+                android:textStyle="bold"
                 />
             <TextView
                 android:text="Date"
                 android:textSize="16sp"
                 android:padding="10dp"
+                android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:layout_column="1"
+                android:textStyle="bold"
+
                 />
             <TextView
                 android:text="Time"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:padding="10dp"
                 android:gravity="center"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="14dp"
+                android:textStyle="bold"
+
                 />
             <TextView
                 android:text="Total"
+                android:layout_marginRight="10dp"
                 android:textSize="16sp"
                 android:padding="10dp"
                 android:gravity="center"
                 android:layout_column="1"
+                android:textStyle="bold"
+
                 />
         </TableRow>
         <androidx.recyclerview.widget.RecyclerView

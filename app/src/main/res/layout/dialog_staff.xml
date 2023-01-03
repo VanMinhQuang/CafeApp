@@ -14,26 +14,44 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="25dp">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="STAFF MANAGING"
-                android:textSize="35sp"
+                android:fontFamily="@font/autour_one"
+                android:textSize="30sp"
                 android:padding="12dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:background="@drawable/bg_yellow_corner_16_topleft_topright"
-                android:textStyle="bold"/>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/ic_baseline_person_add_24"
-                android:id="@+id/profile_img"
-                android:layout_gravity="center"
-                android:paddingTop="10dp"/>
+                android:background="@drawable/custom_button_datestart"
+                android:textStyle="bold"
+                android:layout_margin="20dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_baseline_person_add_24"
+                    android:id="@+id/profile_img"
+                    android:layout_gravity="left"
+                    android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="247dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Chose a picture"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/autour_one"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,11 +63,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="ID"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/custom_input"
+                    android:paddingLeft="20dp"
                     android:minHeight="48dp"
                     android:inputType="numberDecimal"/>
 
                 <EditText
                     android:id="@+id/txtStaffUserName"
+                    android:background="@drawable/custom_input"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
@@ -58,31 +82,40 @@
 
                 <EditText
                     android:id="@+id/txtStaffPassword"
+                    android:background="@drawable/custom_input"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:minHeight="48dp"
-                    android:inputType="textPassword"/>
+                    android:inputType="text"/>
 
                 <EditText
                     android:id="@+id/txtStaffPhoneNumber"
+                    android:background="@drawable/custom_input"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
                     android:minHeight="48dp"
-                    android:inputType="numberSigned"/>
+                    android:inputType="text"/>
 
                 <Spinner
                     android:id="@+id/spinStaffPosition"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:contentDescription="@android:string/autofill"
-                    android:hint="nhap vao pos"
-                    android:minHeight="48dp" />
+                    android:layout_height="78dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/custom_input"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp" />
 
                 <EditText
                     android:id="@+id/txtStaffDisplayName"
+                    android:background="@drawable/custom_input"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Display Name"
@@ -91,11 +124,14 @@
 
                 <EditText
                     android:id="@+id/txtStaffAddress"
+                    android:background="@drawable/custom_input"
+                    android:paddingLeft="20dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
                     android:minHeight="48dp"
-                    android:inputType="textPostalAddress"/>
+                    android:inputType="text"/>
             </LinearLayout>
 
             <LinearLayout
@@ -103,18 +139,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnPush"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/autour_one"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:text="Save"
+                    android:textColor="@color/white"
+                    android:background="#89F40D"
                     android:layout_weight="1"/>
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnCancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:textColor="@color/white"
+                    android:background="#F44336"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/autour_one"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:text="Cancel"
                     android:layout_weight="1"/>
             </LinearLayout>

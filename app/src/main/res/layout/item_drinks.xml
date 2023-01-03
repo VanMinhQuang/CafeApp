@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp">
     <LinearLayout
@@ -24,46 +24,47 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_baseline_table_bar_24"/>
+                />
         </FrameLayout>
 
         <TextView
-            android:background="@color/black"
+            android:fontFamily="@font/autour_one"
             android:id="@+id/txtItemProductCategory"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID BAN"
+            android:text="category"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="gravity" />
+        <TextView
+            android:id="@+id/txtItemProductName"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="name"
+            android:fontFamily="@font/autour_one"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="gravity"/>
+        <TextView
+            android:id="@+id/txtItemPrice"
+            android:textColor="#4CAF50"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="price"
+            android:fontFamily="@font/autour_one"
             android:layout_gravity="center"
             android:gravity="center"
             android:textAlignment="gravity"
-            android:padding="6dp"/>
-        <TextView
-            android:background="@color/black"
-            android:id="@+id/txtItemProductName"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="ID BAN"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textAlignment="gravity"/>
-        <TextView
-            android:background="@color/black"
-            android:id="@+id/txtItemPrice"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="ID BAN"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textAlignment="gravity"/>
+            />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

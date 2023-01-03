@@ -12,6 +12,7 @@
         android:id="@+id/btnSUM"
         android:text="0 VND"
         android:textSize="30dp"
+        android:textColor="#4CAF50"
         android:textStyle="bold"
         android:enabled="false"/>
 
