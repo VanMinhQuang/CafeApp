@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
                     android:minHeight="48dp"
-                    android:inputType="text"/>
+                    android:inputType="numberSigned"/>
 
                 <Spinner
                     android:id="@+id/spinStaffPosition"
