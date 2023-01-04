@@ -97,9 +97,6 @@ public class StaffFragment extends Fragment {
                 }
             }
         });
-
-
-
         lstStaff = new ArrayList<>();
         adapter = new StaffAdapter(lstStaff, new StaffAdapter.mIClickListener() { // Thực hiện chỉnh sửa
             @Override
@@ -131,7 +128,7 @@ public class StaffFragment extends Fragment {
                 btnCancel = viewDialogStaff.findViewById(R.id.btnCancel);
                 profilePic = viewDialogStaff.findViewById(R.id.profile_img);
 
-                 List<String> listSpin = new ArrayList<String>();
+                List<String> listSpin = new ArrayList<String>();
                 listSpin.add("Manager");
                 listSpin.add("Barista");
                 listSpin.add("Waiter");
@@ -156,7 +153,13 @@ public class StaffFragment extends Fragment {
                                 Toast.makeText(getContext(),"Phải nhập đầy đủ thông tin",Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                onClickAddStaff();
+                                if(checkUniqueID(txtID.getText().toString())){
+                                    onClickAddStaff();
+                                    alert.dismiss();
+                                }else{
+                                    Toast.makeText(getContext(),"Đã trùng mã id",Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         }catch (Exception exception){
                             Toast.makeText(getContext(),"Co loi xay ra vui long nhap lai",Toast.LENGTH_SHORT).show();
@@ -184,7 +187,14 @@ public class StaffFragment extends Fragment {
 
     }
 
-
+    public boolean checkUniqueID(String id){
+        for(Staff staff : lstStaff){
+            if(String.valueOf(staff.getId()).equals(id)){
+                return false;
+            }
+        }
+        return true;
+    }
     public String uploadImageToFirebase(Uri uri){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference("StaffImage").child(System.currentTimeMillis() + "." +getFileExtension(uri));

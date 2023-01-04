@@ -80,8 +80,15 @@ public class NotificationsFragment extends Fragment {
                             Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            onClickAddCategory();
-                            alert.dismiss();
+                            if(checkUniqueID(txtCategoryID.getText().toString())){
+                                onClickAddCategory();
+                                alert.dismiss();
+                            }
+                            else{
+                                Toast.makeText(getContext(),"Đã trùng mã id",Toast.LENGTH_SHORT).show();
+                            }
+
+
                         }
                     }
                 });
@@ -99,6 +106,14 @@ public class NotificationsFragment extends Fragment {
         return root;
     }
 
+    public boolean checkUniqueID(String id){
+        for(Category category : lstCategory){
+            if(String.valueOf(category.getCategoryID()).equals(id)){
+                return false;
+            }
+        }
+        return true;
+    }
     private void onClickAddCategory() {
         try{
             int id = Integer.parseInt(txtCategoryID.getText().toString());

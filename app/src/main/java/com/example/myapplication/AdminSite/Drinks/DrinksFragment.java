@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapter.ProductAdapter;
+import com.example.myapplication.Model.Category;
 import com.example.myapplication.Model.Product;
 import com.example.myapplication.R;
 import com.example.myapplication.SwipeCallBack.SwipeItemProduct;
@@ -141,8 +142,14 @@ public class DrinksFragment extends Fragment {
                             Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            onClickAddProduct();
-                            alert.dismiss();
+                            if(checkUniqueID(txtID.getText().toString())){
+                                onClickAddProduct();
+                                alert.dismiss();
+                            }
+                            else{
+                                Toast.makeText(getContext(),"Đã trùng mã id",Toast.LENGTH_SHORT).show();
+                            }
+
                         }
 
                     }
@@ -160,6 +167,15 @@ public class DrinksFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(rcvProduct);
         getAllProduct();
         return root;
+    }
+
+    public boolean checkUniqueID(String id){
+        for(Product product : lstProduct){
+            if(String.valueOf(product.getProductID()).equals(id)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void onClickAddProduct(){
