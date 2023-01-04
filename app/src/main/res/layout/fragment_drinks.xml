@@ -18,7 +18,7 @@
     <com.example.myapplication.MovableFloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_person_add_24"
+        android:src="@drawable/ic_baseline_add_circle_outline_24"
         android:id="@+id/floatingbtnAddDrinks"
         android:layout_centerInParent="true"/>
 </RelativeLayout>
