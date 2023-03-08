@@ -46,7 +46,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
     FragmentResultOrderBinding binding;
     RecyclerView rcvBills;
     Button btnResult, btnSum;
-    DatePicker datePickerDialog;
     CartAdapter adapter;
     List<Cart> lstCart;
     ICartLoadListener iCartLoadListener;
@@ -60,7 +59,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
         adapter = new CartAdapter(lstCart);
         rcvBills.setAdapter(adapter);
         loadCartFromFirebase();
-
         btnResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +79,6 @@ public class ResultOrderFragment extends Fragment implements ICartLoadListener {
         String currentTime = timeFormat.format(Calendar.getInstance().getTime());
         float totalPrice = Float.parseFloat(btnSum.getText().toString());
         String id = myRef.push().getKey();
-        List<Cart> lstCartToAdd = lstCart;
         Bill bill = new Bill(id, totalPrice, currentDate,currentTime,lstCart);
         new AlertDialog.Builder(getContext())
                 .setTitle("Thanh toán")

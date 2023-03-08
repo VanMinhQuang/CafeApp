@@ -61,7 +61,7 @@ public class DrinksFragment extends Fragment {
     private ProductAdapter adapter;
     private RecyclerView rcvProduct;
     private FloatingActionButton btnAdd;
-    private EditText txtID, txtName, txtPrice, txtQuantity;
+    private EditText txtID, txtName, txtPrice;
     private Spinner spinnerProductCategory;
     private CircleImageView productImg, imgProduct;
     private Button btnSave, btnCancel;
@@ -117,7 +117,6 @@ public class DrinksFragment extends Fragment {
                 txtID = viewDialogStaff.findViewById(R.id.txtProductID);
                 txtName = viewDialogStaff.findViewById(R.id.txtProductName);
                 txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
-                txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantity);
                 productImg = viewDialogStaff.findViewById(R.id.product_img);
                 btnSave = viewDialogStaff.findViewById(R.id.btnPushProduct);
                 spinnerProductCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
@@ -138,7 +137,7 @@ public class DrinksFragment extends Fragment {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(txtID.getText().toString().isEmpty() || txtName.getText().toString().isEmpty() || txtQuantity.getText().toString().isEmpty() || txtPrice.getText().toString().isEmpty()){
+                        if(txtID.getText().toString().isEmpty() || txtName.getText().toString().isEmpty() || txtPrice.getText().toString().isEmpty()){
                             Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }
                         else{
@@ -184,12 +183,11 @@ public class DrinksFragment extends Fragment {
             String name = txtName.getText().toString();
             String categoryName = spinnerProductCategory.getSelectedItem().toString();
             float price = Float.parseFloat(txtPrice.getText().toString());
-            long quantity = Long.parseLong(txtQuantity.getText().toString());
             String imgURI = uriName;
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Product/" +id);
-            Product product = new Product(id,categoryName,price,name, quantity, imgURI);
+            Product product = new Product(id,categoryName,price,name, imgURI);
             myRef.setValue(product, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -216,7 +214,7 @@ public class DrinksFragment extends Fragment {
             EditText txtID = viewDialogStaff.findViewById(R.id.txtProductID);
             EditText txtName = viewDialogStaff.findViewById(R.id.txtProductName);
             EditText txtPrice = viewDialogStaff.findViewById(R.id.txtProductPrice);
-            EditText txtQuantity = viewDialogStaff.findViewById(R.id.txtProductQuantity);
+
             Spinner spinCategory = viewDialogStaff.findViewById(R.id.spinProductCategory);
             imgProduct = viewDialogStaff.findViewById(R.id.product_img);
             Button btnPush = viewDialogStaff.findViewById(R.id.btnPushProduct);
@@ -229,7 +227,6 @@ public class DrinksFragment extends Fragment {
             txtID.setText(String.valueOf(product.getProductID()));
             txtName.setText(product.getProductName());
             txtPrice.setText(String.valueOf(product.getPrice()));
-            txtQuantity.setText(String.valueOf(product.getQuantity()));
             int getPos = spinArray.getPosition(product.getCategoryProduct());
             spinCategory.setSelection(getPos);
             Picasso.get().load(product.getProductURI()).into(imgProduct);
@@ -247,11 +244,10 @@ public class DrinksFragment extends Fragment {
 
                     String newName = txtName.getText().toString().trim();
                     float newPrice = Float.parseFloat(txtPrice.getText().toString().trim());
-                    long newQuantity = Long.parseLong(txtQuantity.getText().toString().trim());
                     String newCategorySelect = spinCategory.getSelectedItem().toString();
                     String newUri = uriName;
 
-                    if(TextUtils.isEmpty(newName) || String.valueOf(newPrice) == "" || TextUtils.isEmpty(String.valueOf(newQuantity)) || TextUtils.isEmpty(newCategorySelect)){
+                    if(TextUtils.isEmpty(newName) || String.valueOf(newPrice) == ""  || TextUtils.isEmpty(newCategorySelect)){
                         Toast.makeText(getContext(),"Vui long dien day du thong tin",Toast.LENGTH_LONG).show();
                         return;
                     }
@@ -259,7 +255,6 @@ public class DrinksFragment extends Fragment {
                     product.setProductName(newName);
                     product.setCategoryProduct(newCategorySelect);
                     product.setPrice(newPrice);
-                    product.setQuantity(newQuantity);
                     product.setProductURI(newUri);
                     myRef.child(String.valueOf(product.getProductID())).updateChildren(product.toMap(), new DatabaseReference.CompletionListener() {
                         @Override

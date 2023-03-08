@@ -71,13 +71,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             }
         });
-        if(product.getQuantity() < 10){
-            holder.txtName.setBackgroundColor(Color.RED);
-            holder.txtCategoryName.setBackgroundColor(Color.RED);
-        }else{
-            holder.txtName.setBackgroundColor(Color.BLACK);
-            holder.txtCategoryName.setBackgroundColor(Color.BLACK);
-        }
         holder.setListener(new IRecycleViewClickListener() {
             @Override
             public void onRecycleClick(View view, int position) {

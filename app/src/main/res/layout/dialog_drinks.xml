@@ -101,15 +101,7 @@
                     android:minHeight="48dp"
                     android:inputType="numberDecimal"/>
 
-                <EditText
-                    android:id="@+id/txtProductQuantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Quantity"
-                    android:background="@drawable/custom_input"
-                    android:paddingLeft="20dp"
-                    android:minHeight="48dp"
-                    android:inputType="numberSigned"/>
+
             </LinearLayout>
 
             <LinearLayout

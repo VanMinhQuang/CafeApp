@@ -8,7 +8,6 @@ public class Product {
     private String categoryProduct;
     private float price;
     private String productName;
-    private long quantity;
     private String productURI;
 
     public int getProductID() {
@@ -52,24 +51,15 @@ public class Product {
         this.productName = productName;
     }
 
-    public long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
-    }
-
 
     public Product() {
     }
 
-    public Product(int productID, String category, float price, String productName, long quantity, String productURI) {
+    public Product(int productID, String category, float price, String productName, String productURI) {
         this.productID = productID;
         this.categoryProduct = category;
         this.price = price;
         this.productName = productName;
-        this.quantity = quantity;
         this.productURI = productURI;
     }
     public Map<String,Object> toMap(){
@@ -78,7 +68,6 @@ public class Product {
         result.put("productName", productName);
         result.put("categoryProduct", categoryProduct);
         result.put("price",price);
-        result.put("quantity",quantity);
         result.put("productURI",productURI);
         return result;
     }

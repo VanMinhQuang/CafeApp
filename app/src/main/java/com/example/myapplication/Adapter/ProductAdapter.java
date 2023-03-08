@@ -62,13 +62,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             }
         });
-        if(product.getQuantity() < 10){
-            holder.txtName.setBackgroundColor(Color.RED);
-            holder.txtCategoryName.setBackgroundColor(Color.RED);
-        }else{
-            holder.txtName.setBackgroundColor(Color.BLACK);
-            holder.txtCategoryName.setBackgroundColor(Color.BLACK);
-        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
